@@ -35,6 +35,9 @@ abstract class Routes {
       
       case ksplashScreen2:
         return CupertinoPageRoute(builder: (context) => SplashScreen());
+      
+      // case kShowNotification:
+      //   return CupertinoPageRoute(builder: (context) => ShowNotification());
 
       
       default:

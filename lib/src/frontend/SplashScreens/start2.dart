@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:motivation_quotes/src/backend/ReminderPref.dart';
 import 'package:motivation_quotes/src/controller/AppConfigurations/Colors.dart';
 import 'package:motivation_quotes/src/controller/AppConfigurations/TextStyles.dart';
 import 'package:motivation_quotes/src/frontend/SplashScreens/SplashScreen.dart';
@@ -14,18 +15,26 @@ class StartScreen2 extends StatefulWidget {
 class _StartScreen2State extends State<StartScreen2>
     with SingleTickerProviderStateMixin {
   int notificationCount = 10;
-  TimeOfDay _time;
-  TimeOfDay _endTime;
+  DateTime _startTime;
+  DateTime _endTime;
   @override
   void initState() {
-    _endTime = TimeOfDay.now();
-    _time = TimeOfDay(hour: _endTime.hour-6,minute: _endTime.minute);
+    initTimeSettings();
+    saveNotificationCount(notificationCount);
+    saveTimeValue();
     super.initState();
+  }
+
+  initTimeSettings() {
+    DateTime now = DateTime.now();
+    _startTime = DateTime(now.year, now.month, now.day, now.hour, now.minute);
+    _endTime = DateTime(now.year, now.month, now.day, now.hour + 11, now.minute);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       backgroundColor: Color(0xFFe2f0f3),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -141,6 +150,7 @@ class _StartScreen2State extends State<StartScreen2>
                 if (notificationCount > 0) {
                   notificationCount = notificationCount - 1;
                 }
+                saveNotificationCount(notificationCount);
               });
             },
           ),
@@ -156,6 +166,7 @@ class _StartScreen2State extends State<StartScreen2>
                 if (notificationCount < 20) {
                   notificationCount = notificationCount + 1;
                 }
+                saveNotificationCount(notificationCount);
               });
             },
           ),
@@ -168,7 +179,7 @@ class _StartScreen2State extends State<StartScreen2>
             child: Text(
           endTime
               ? '${_endTime.hour}:${_endTime.minute}'
-              : '${_time.hour}:${_time.minute}',
+              : '${_startTime.hour}:${_startTime.minute}',
           style: startText2small,
         )),
         decoration: BoxDecoration(
@@ -176,24 +187,39 @@ class _StartScreen2State extends State<StartScreen2>
       );
 
   pickTime(bool endTime) async {
-    TimeOfDay time = await showTimePicker(
+    DateTime now = DateTime.now();
+    var time = await showTimePicker(
         context: context,
-        initialTime: _time,
+        initialTime: endTime
+            ? TimeOfDay(hour: _endTime.hour, minute: _endTime.minute)
+            : TimeOfDay(hour: _startTime.hour, minute: _startTime.minute),
         builder: (context, child) {
-          return Theme(
-            data: ThemeData(),
+          return MediaQuery(
+            data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
             child: child,
           );
         });
     if (time != null) {
       setState(() {
         if (endTime == true) {
-          _endTime = time;
+          _endTime =
+              DateTime(now.year, now.month, now.day, time.hour, time.minute);
         } else {
-          _time = time;
+          _startTime =
+              DateTime(now.year, now.month, now.day, time.hour, time.minute);
         }
       });
     }
+    saveTimeValue();
+  }
+
+  saveNotificationCount(value) async {
+    await ReminderPrefs().setNotificationCount(value);
+  }
+
+  saveTimeValue() async {
+    await ReminderPrefs().setstartTime(_startTime.toString());
+    await ReminderPrefs().setendTime(_endTime.toString());
   }
 }
 

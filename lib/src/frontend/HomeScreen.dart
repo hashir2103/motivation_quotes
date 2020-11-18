@@ -8,14 +8,21 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: kPrimaryColor,
       body: Container(
         child: Center(
-          child: FlatButton(
-              onPressed: () {
-                Navigator.pushNamed(context, ksplashScreen2);
-              },
-              child: Text('Press Me!',style:splashText(),)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              FlatButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, kShowNotification);
+                  },
+                  child: Text(
+                    'Press Me!',
+                    style: splashText(),
+                  )),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: BottomNavigation(),

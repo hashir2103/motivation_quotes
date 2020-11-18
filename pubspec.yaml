@@ -25,11 +25,15 @@ dependencies:
     sdk: flutter
   animated_splash_screen: ^1.0.1+2
   cupertino_icons: ^1.0.0
+  flutter_local_notifications: ^3.0.1+4
+  flutter_native_timezone: ^1.0.4
   flutter_svg: ^0.19.1
   font_awesome_flutter: ^8.10.0
   google_fonts: ^1.1.1
+  intl: ^0.16.1
   provider: ^4.3.2+2
   rxdart: ^0.24.1
+  shared_preferences: ^0.5.12+4
 
 dev_dependencies:
   flutter_test:
