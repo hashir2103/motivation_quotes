@@ -1,0 +1,84 @@
+import 'package:rxdart/rxdart.dart';
+
+class CatergoryBloc {
+  // streams
+  final _general = BehaviorSubject<bool>.seeded(false);
+  final _favourite = BehaviorSubject<bool>.seeded(false);
+  final _hardtime = BehaviorSubject<bool>.seeded(false);
+  final _inspiration = BehaviorSubject<bool>.seeded(false);
+  final _love = BehaviorSubject<bool>.seeded(false);
+  final _selfesteem = BehaviorSubject<bool>.seeded(false);
+  final _productivity = BehaviorSubject<bool>.seeded(false);
+  final _saying = BehaviorSubject<bool>.seeded(false);
+  final _monday = BehaviorSubject<bool>.seeded(false);
+  final _future = BehaviorSubject<bool>.seeded(false);
+  final _life = BehaviorSubject<bool>.seeded(false);
+  final _workout = BehaviorSubject<bool>.seeded(false);
+  final _birthday = BehaviorSubject<bool>.seeded(false);
+  final _night = BehaviorSubject<bool>.seeded(false);
+  final _travel = BehaviorSubject<bool>.seeded(false);
+  final _sport = BehaviorSubject<bool>.seeded(false);
+  final _past = BehaviorSubject<bool>.seeded(false);
+  final _passion = BehaviorSubject<bool>.seeded(false);
+
+  // getter
+  Stream<bool> get general => _general.stream;
+  Stream<bool> get favourite => _favourite.stream;
+  Stream<bool> get hardtime => _hardtime.stream;
+  Stream<bool> get inspiration => _inspiration.stream;
+  Stream<bool> get love => _love.stream;
+  Stream<bool> get selfEsteem => _selfesteem.stream;
+  Stream<bool> get productivity => _productivity.stream;
+  Stream<bool> get saying => _saying.stream;
+  Stream<bool> get monday => _monday.stream;
+  Stream<bool> get future => _future.stream;
+  Stream<bool> get life => _life.stream;
+  Stream<bool> get workout => _workout.stream;
+  Stream<bool> get birthday => _birthday.stream;
+  Stream<bool> get night => _night.stream;
+  Stream<bool> get travel => _travel.stream;
+  Stream<bool> get sport => _sport.stream;
+  Stream<bool> get past => _past.stream;
+  Stream<bool> get passion => _passion.stream;
+
+  //setter
+  Function(bool) get changeGeneral => _general.sink.add;
+  Function(bool) get changeFavourite=> _favourite.sink.add;
+  Function(bool) get changeHardtimes => _hardtime.sink.add;
+  Function(bool) get changeInspiration => _inspiration.sink.add;
+  Function(bool) get changeLove => _love.sink.add;
+  Function(bool) get changeSelfEsteem => _selfesteem.sink.add;
+  Function(bool) get changeProductivity => _productivity.sink.add;
+  Function(bool) get changeSaying => _saying.sink.add;
+  Function(bool) get changeMonday => _monday.sink.add;
+  Function(bool) get changeFuture => _future.sink.add;
+  Function(bool) get changeLife => _life.sink.add;
+  Function(bool) get changeWorkout => _workout.sink.add;
+  Function(bool) get changeBirthday => _birthday.sink.add;
+  Function(bool) get changeNight => _night.sink.add;
+  Function(bool) get changeTravel => _travel.sink.add;
+  Function(bool) get changeSport => _sport.sink.add;
+  Function(bool) get changePast => _past.sink.add;
+  Function(bool) get changePassion => _passion.sink.add;
+
+  dispose() {
+    _general.close();
+    _favourite.close();
+    _hardtime.close();
+    _inspiration.close();
+    _love.close();
+    _selfesteem.close();
+    _productivity.close();
+    _saying.close();
+    _monday.close();
+    _future.close();
+    _life.close();
+    _workout.close();
+    _birthday.close();
+    _night.close();
+    _travel.close();
+    _sport.close();
+    _past.close();
+    _passion.close();
+  }
+}

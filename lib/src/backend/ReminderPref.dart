@@ -1,8 +1,7 @@
-import 'package:motivation_quotes/src/controller/AppConfigurations/constants.dart';
+import 'package:motivation_quotes/src/AppConfigurations/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ReminderPrefs {
-  
   //getters
   get startTime async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
@@ -25,7 +24,6 @@ class ReminderPrefs {
     return _pref.setString(kStartTimeHour, value);
   }
 
-
   setendTime(String value) async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
     return _pref.setString(kEndTimeMin, value);
@@ -35,5 +33,4 @@ class ReminderPrefs {
     SharedPreferences _pref = await SharedPreferences.getInstance();
     return _pref.setInt(kNotificationCount, value);
   }
- 
 }

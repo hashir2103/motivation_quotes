@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:motivation_quotes/src/controller/AppConfigurations/Colors.dart';
-import 'package:motivation_quotes/src/controller/AppConfigurations/TextStyles.dart';
-import 'package:motivation_quotes/src/controller/AppConfigurations/size.dart';
+import 'package:motivation_quotes/src/AppConfigurations/Colors.dart';
+import 'package:motivation_quotes/src/AppConfigurations/TextStyles.dart';
+import 'package:motivation_quotes/src/AppConfigurations/size.dart';
 import 'package:motivation_quotes/src/frontend/SplashScreens/start2.dart';
 import 'package:motivation_quotes/src/frontend/_widgets/startButton.dart';
 
@@ -59,51 +59,56 @@ class _StartScreen3State extends State<StartScreen3>
                           Column(
                             children: [
                               GestureDetector(
-                                onTap: (){
-                                  setState(() {
-                                    tap[0]=!tap[0];
-                                  });
-                                },
-                                child: categoryContainer('Inspiration',tap[0])),
+                                  onTap: () {
+                                    setState(() {
+                                      tap[0] = !tap[0];
+                                    });
+                                  },
+                                  child:
+                                      categoryContainer('Inspiration', tap[0])),
                               GestureDetector(
-                                onTap: (){
-                                  setState(() {
-                                    tap[1]=!tap[1];
-                                  });
-                                },
-                                child: categoryContainer('Productivity',tap[1] )),
+                                  onTap: () {
+                                    setState(() {
+                                      tap[1] = !tap[1];
+                                    });
+                                  },
+                                  child: categoryContainer(
+                                      'Productivity', tap[1])),
                               GestureDetector(
-                                onTap: (){
-                                  setState(() {
-                                    tap[2]=!tap[2];
-                                  });
-                                },
-                                child: categoryContainer('Love', tap[2])),
+                                  onTap: () {
+                                    setState(() {
+                                      tap[2] = !tap[2];
+                                    });
+                                  },
+                                  child: categoryContainer('Love', tap[2])),
                             ],
                           ),
                           Column(
                             children: [
                               GestureDetector(
-                                onTap: (){
-                                  setState(() {
-                                    tap[3]=!tap[3];
-                                  });
-                                },
-                                child: categoryContainer('Self-esteem', tap[3])),
+                                  onTap: () {
+                                    setState(() {
+                                      tap[3] = !tap[3];
+                                    });
+                                  },
+                                  child:
+                                      categoryContainer('Self-esteem', tap[3])),
                               GestureDetector(
-                                onTap: (){
-                                  setState(() {
-                                    tap[4]=!tap[4];
-                                  });
-                                },
-                                child: categoryContainer('Hard times', tap[4])),
+                                  onTap: () {
+                                    setState(() {
+                                      tap[4] = !tap[4];
+                                    });
+                                  },
+                                  child:
+                                      categoryContainer('Hard times', tap[4])),
                               GestureDetector(
-                                onTap: (){
-                                  setState(() {
-                                    tap[5]=!tap[5];
-                                  });
-                                },
-                                child: categoryContainer('Sports & fitness', tap[5])),
+                                  onTap: () {
+                                    setState(() {
+                                      tap[5] = !tap[5];
+                                    });
+                                  },
+                                  child: categoryContainer(
+                                      'Sports & fitness', tap[5])),
                             ],
                           ),
                         ],
@@ -151,7 +156,7 @@ class _StartScreen3State extends State<StartScreen3>
   categoryContainer(String label, bool istap) {
     var x = SizeConfig.screenWidth * 0.4;
     var y = SizeConfig.screenHeight * 0.1;
-        return Container(
+    return Container(
       margin: EdgeInsets.only(bottom: 8),
       width: x,
       height: y,

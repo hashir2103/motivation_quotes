@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:motivation_quotes/src/controller/AppConfigurations/TextStyles.dart';
-import 'package:motivation_quotes/src/controller/AppConfigurations/size.dart';
+import 'package:motivation_quotes/src/AppConfigurations/TextStyles.dart';
+import 'package:motivation_quotes/src/AppConfigurations/size.dart';
 
 abstract class Buttons {
   static Widget startButton(String text, Function onPressed) {

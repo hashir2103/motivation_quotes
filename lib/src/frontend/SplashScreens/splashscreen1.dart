@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:motivation_quotes/src/AppConfigurations/Colors.dart';
 import 'dart:math' as math;
 
-import 'package:motivation_quotes/src/controller/AppConfigurations/constants.dart';
+import 'package:motivation_quotes/src/AppConfigurations/constants.dart';
 
 class SplashScreen1 extends StatefulWidget {
   @override
@@ -62,6 +63,7 @@ class _SplashScreen1State extends State<SplashScreen1>
                   child: Icon(
                     Icons.accessibility_new,
                     size: 75,
+                    color: kIconColor,
                   ),
                 ),
               )

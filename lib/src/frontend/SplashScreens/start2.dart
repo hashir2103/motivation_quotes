@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:motivation_quotes/src/backend/ReminderPref.dart';
-import 'package:motivation_quotes/src/controller/AppConfigurations/Colors.dart';
-import 'package:motivation_quotes/src/controller/AppConfigurations/TextStyles.dart';
+import 'package:motivation_quotes/src/AppConfigurations/Colors.dart';
+import 'package:motivation_quotes/src/AppConfigurations/TextStyles.dart';
 import 'package:motivation_quotes/src/frontend/SplashScreens/SplashScreen.dart';
 import 'package:motivation_quotes/src/frontend/_widgets/startButton.dart';
 
@@ -28,7 +28,8 @@ class _StartScreen2State extends State<StartScreen2>
   initTimeSettings() {
     DateTime now = DateTime.now();
     _startTime = DateTime(now.year, now.month, now.day, now.hour, now.minute);
-    _endTime = DateTime(now.year, now.month, now.day, now.hour + 11, now.minute);
+    _endTime =
+        DateTime(now.year, now.month, now.day, now.hour + 11, now.minute);
   }
 
   @override

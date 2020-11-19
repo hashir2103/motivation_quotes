@@ -1,10 +1,10 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:motivation_quotes/src/controller/AppConfigurations/Colors.dart';
-import 'package:motivation_quotes/src/controller/AppConfigurations/TextStyles.dart';
-import 'package:motivation_quotes/src/controller/AppConfigurations/size.dart';
-import 'package:motivation_quotes/src/frontend/HomeScreen.dart';
+import 'package:motivation_quotes/src/AppConfigurations/Colors.dart';
+import 'package:motivation_quotes/src/AppConfigurations/TextStyles.dart';
+import 'package:motivation_quotes/src/AppConfigurations/size.dart';
+import 'package:motivation_quotes/src/frontend/HomeScreens/HomeScreen.dart';
 
 class SplashScreen extends StatelessWidget {
   @override
@@ -25,7 +25,7 @@ class SplashScreen extends StatelessWidget {
                 nextScreen: SplashScreen(),
                 splash: Icon(
                   Icons.format_quote,
-                  color: Colors.white,
+                  color: kIconColor,
                   size: getProportionateScreenWidth(120),
                 )),
           ),

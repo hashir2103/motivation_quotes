@@ -5,6 +5,7 @@ import 'Colors.dart';
 
 ThemeData theme() {
   return ThemeData(
+    // bottomNavigationBarTheme: ,
     scaffoldBackgroundColor: kPrimaryColor,
     // appBarTheme: appBarTheme(),
     // fontFamily: "Muli",

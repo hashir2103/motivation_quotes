@@ -1,15 +1,39 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:motivation_quotes/src/controller/AppConfigurations/Colors.dart';
-import 'package:motivation_quotes/src/controller/AppConfigurations/TextStyles.dart';
-import 'package:motivation_quotes/src/controller/AppConfigurations/size.dart';
+import 'package:motivation_quotes/src/AppConfigurations/Colors.dart';
+import 'package:motivation_quotes/src/AppConfigurations/TextStyles.dart';
+import 'package:motivation_quotes/src/AppConfigurations/size.dart';
+import 'package:motivation_quotes/src/backend/sqliteDB.dart';
+import 'package:motivation_quotes/src/controller/Quotes/quotesModel.dart';
 import 'package:motivation_quotes/src/frontend/SplashScreens/start3.dart';
 import 'package:motivation_quotes/src/frontend/_widgets/startButton.dart';
+// import 'package:provider/provider.dart';
 
-class StartScreen extends StatelessWidget {
+class StartScreen extends StatefulWidget {
+  @override
+  _StartScreenState createState() => _StartScreenState();
+}
+
+class _StartScreenState extends State<StartScreen> {
+  SqliteDB db = SqliteDB();
+  @override
+  void initState() {
+    db.init();
+    // db.deleteAllQuotes();
+    super.initState();
+  }
+
+  addQuoteToDb() {
+    for (var quote in quotes) {
+      db.addQuote(quote);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    // var db = Provider.of<QuoteDB>(context);
+    // addQuoteToDb();
     SizeConfig.init(context);
     return Container(
       decoration: BoxDecoration(gradient: kStartGradientColor),

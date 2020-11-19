@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:motivation_quotes/src/controller/NotificationController/Notification_Channel.dart';
+import 'package:motivation_quotes/src/controller/Notification/Notification_Channel.dart';
 
 
 class AppNotification {
