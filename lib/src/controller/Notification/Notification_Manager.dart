@@ -1,6 +1,7 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
-import 'package:motivation_quotes/src/backend/ReminderPref.dart';
+import 'package:motivation_quotes/src/backend/sqliteDB.dart';
 import 'package:rxdart/rxdart.dart';
 import 'Notification_Channel.dart';
 import 'Notification.dart' as custom;
@@ -21,9 +22,9 @@ class NotificationManager {
 
   static final List<NotificationChannel> scheduledNotificationChannels = [
     NotificationChannel(
-        channelID: "Hijoz azoni",
-        channelDescription: "Hijoz azoni yangarashi uchun",
-        channelName: "Hijoz azoni channel",
+        channelID: "Motivation",
+        channelDescription: "Motivation Quote",
+        channelName: "Motivation",
         // soundName: "hijoz_azoni",
         hasSound: true),
     NotificationChannel(
@@ -82,55 +83,59 @@ class NotificationManager {
     });
   }
 
-  Future<void> scheduleNotification(List<custom.AppNotification> notifications) async {
-    var timeList = await scheduleTimeList;
+  Future<void> scheduleNotification(
+      List<custom.AppNotification> notifications, SqliteDB db) async {
+    var timeList = await scheduleTimeList(db);
     for (int i = 0; i < timeList.length; i++) {
-    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      notifications[i].channel.channelID,
-      notifications[i].channel.channelName,
-      notifications[i].channel.channelDescription,
-      icon: 'app_icon',
-      sound:
-          RawResourceAndroidNotificationSound(notifications[i].channel.soundName),
-      largeIcon: DrawableResourceAndroidBitmap('app_icon'),
-      autoCancel: false,
-      enableLights: true,
-      playSound: notifications[i].channel.hasSound,
-      // color: Colors.green,
-      // ledColor: const Color.fromARGB(255, 255, 0, 0),
-      // ledOnMs: 1000,
-      // ledOffMs: 500
-    );
+      var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        notifications[i].channel.channelID,
+        notifications[i].channel.channelName,
+        notifications[i].channel.channelDescription,
+        icon: 'app_icon',
+        sound: RawResourceAndroidNotificationSound(
+            notifications[i].channel.soundName),
+        // largeIcon: DrawableResourceAndroidBitmap('app_icon'),
+        // maxProgress: 2,
+        autoCancel: false,
+        enableLights: true,
+        playSound: notifications[i].channel.hasSound,
+        // color: Colors.green,
+        ledColor: const Color.fromARGB(255, 255, 0, 0),
+        ledOnMs: 1000,
+        ledOffMs: 500
+      );
 
-    var iOSPlatformChannelSpecifics = IOSNotificationDetails(sound: 'slow_spring_board.aiff');
+      var iOSPlatformChannelSpecifics =
+          IOSNotificationDetails(sound: 'slow_spring_board.aiff');
 
-    var platformChannelSpecifics = NotificationDetails(
-        android: androidPlatformChannelSpecifics,
-        iOS: iOSPlatformChannelSpecifics);
-    
-    await flutterLocalNotificationsPlugin.zonedSchedule(
-        notifications[i].notificationID,
-        notifications[i].notificationTitle,
-        notifications[i].notificationBody,
-        timeList[i],
-        platformChannelSpecifics,
-        androidAllowWhileIdle: true,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime);
+      var platformChannelSpecifics = NotificationDetails(
+          android: androidPlatformChannelSpecifics,
+          iOS: iOSPlatformChannelSpecifics);
+
+      await flutterLocalNotificationsPlugin.zonedSchedule(
+          notifications[i].notificationID,
+          notifications[i].notificationTitle,
+          notifications[i].notificationBody,
+          timeList[i],
+          platformChannelSpecifics,
+          androidAllowWhileIdle: true,
+          uiLocalNotificationDateInterpretation:
+              UILocalNotificationDateInterpretation.absoluteTime);
     }
   }
 
-  Future<List<tz.TZDateTime>> get scheduleTimeList async {
+  Future<List<tz.TZDateTime>> scheduleTimeList(SqliteDB db) async {
     List<tz.TZDateTime> timeList = [];
-    var notificationCount = await ReminderPrefs().notificationCount;
-    var startTime = await ReminderPrefs().startTime;
-    var endTime = await ReminderPrefs().endTime;
+    var rem = await db.getReminder();
+    var notificationCount = rem.reminderCount;
+    var startTime = rem.startTime.substring(0,19);
+    var endTime = rem.endTime.substring(0,19);
     var tzStartTime = tz.TZDateTime.parse(tz.local, startTime);
     var tzEndTime = tz.TZDateTime.parse(tz.local, endTime);
     var diff = tzEndTime.difference(tzStartTime);
     var diffInMircoseconds = (diff.inMicroseconds / notificationCount).ceil();
     var duration = Duration(microseconds: diffInMircoseconds);
-    for (int i = 0; i < notificationCount; i++) {
+    for (int i = 1; i < notificationCount +1; i++) {
       timeList.add(tzStartTime.add(duration * i));
     }
     return timeList;

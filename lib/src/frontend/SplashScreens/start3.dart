@@ -2,9 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:motivation_quotes/src/AppConfigurations/Colors.dart';
 import 'package:motivation_quotes/src/AppConfigurations/TextStyles.dart';
+import 'package:motivation_quotes/src/AppConfigurations/constants.dart';
 import 'package:motivation_quotes/src/AppConfigurations/size.dart';
+import 'package:motivation_quotes/src/backend/sqliteDB.dart';
+import 'package:motivation_quotes/src/controller/Catergories/catergoryModel.dart';
 import 'package:motivation_quotes/src/frontend/SplashScreens/start2.dart';
 import 'package:motivation_quotes/src/frontend/_widgets/startButton.dart';
+import 'package:provider/provider.dart';
 
 class StartScreen3 extends StatefulWidget {
   @override
@@ -21,8 +25,10 @@ class _StartScreen3State extends State<StartScreen3>
     false,
     false,
   ];
+
   @override
   Widget build(BuildContext context) {
+    var db = Provider.of<SqliteDB>(context);
     return Scaffold(
       backgroundColor: Color(0xFFf4dee0),
       body: Column(
@@ -136,6 +142,50 @@ class _StartScreen3State extends State<StartScreen3>
                       Buttons.startButton(
                         'Continue',
                         () {
+                          List<CatergoryModel> cats = [
+                            CatergoryModel(
+                                catergoryName: kPast, showCatergory: 0),
+                            CatergoryModel(
+                                catergoryName: kFitness,
+                                showCatergory: tap[5] == true ? 1 : 0),
+                            CatergoryModel(
+                                catergoryName: kProductivity,
+                                showCatergory: tap[1] == true ? 1 : 0),
+                            CatergoryModel(
+                                catergoryName: kLove,
+                                showCatergory: tap[2] == true ? 1 : 0),
+                            CatergoryModel(
+                                catergoryName: kSaying, showCatergory: 0),
+                            CatergoryModel(
+                                catergoryName: kMonday, showCatergory: 0),
+                            CatergoryModel(
+                                catergoryName: kLife, showCatergory: 0),
+                            CatergoryModel(
+                                catergoryName: kInspiration,
+                                showCatergory: tap[0] == true ? 1 : 0),
+                            CatergoryModel(
+                                catergoryName: kHardtimes,
+                                showCatergory: tap[4] == true ? 1 : 0),
+                            CatergoryModel(
+                                catergoryName: kFuture, showCatergory: 0),
+                            CatergoryModel(
+                                catergoryName: kBirthday, showCatergory: 0),
+                            CatergoryModel(
+                                catergoryName: kNight, showCatergory: 0),
+                            CatergoryModel(
+                                catergoryName: kTravel, showCatergory: 0),
+                            CatergoryModel(
+                                catergoryName: kSport, showCatergory: 0),
+                            CatergoryModel(
+                                catergoryName: kSelfesteem,
+                                showCatergory: tap[3] == true ? 1 : 0),
+                            CatergoryModel(
+                                catergoryName: kPassion, showCatergory: 0),
+                          ];
+                          for (var cat in cats) {
+                            db.addCat(cat);
+                          }
+                          print('catergory added!..');
                           Navigator.pushReplacement(
                               context,
                               CupertinoPageRoute(

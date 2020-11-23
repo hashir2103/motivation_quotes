@@ -18,4 +18,21 @@ const String kNotificationCount = 'notificationCount';
 //HiveDB
 const String kQuoteBox = 'quoteBox';
 
-//SqliteDB
+//Catergories Name
+const String kPast = 'Past';
+const String kFitness = 'Fitness';
+const String kProductivity = 'Productivity';
+const String kLove = 'love';
+const String kSaying = 'saying';
+const String kMonday = 'Monday';
+const String kLife = 'life';
+const String kInspiration = 'Inspiration';
+const String kHardtimes = 'Hard times';
+const String kFuture = 'future';
+const String kBirthday = 'birthday';
+const String kNight = 'Night';
+const String kTravel = 'Travel';
+const String kSport = 'Sport';
+const String kSelfesteem = 'Self-Esteem';
+const String kPassion = 'Passion';
+

@@ -8,6 +8,7 @@ import 'package:motivation_quotes/src/backend/sqliteDB.dart';
 import 'package:motivation_quotes/src/controller/Quotes/quotesModel.dart';
 import 'package:motivation_quotes/src/frontend/SplashScreens/start3.dart';
 import 'package:motivation_quotes/src/frontend/_widgets/startButton.dart';
+import 'package:provider/provider.dart';
 // import 'package:provider/provider.dart';
 
 class StartScreen extends StatefulWidget {
@@ -16,24 +17,29 @@ class StartScreen extends StatefulWidget {
 }
 
 class _StartScreenState extends State<StartScreen> {
-  SqliteDB db = SqliteDB();
+  
   @override
   void initState() {
+    var db = Provider.of<SqliteDB>(context, listen: false);
     db.init();
     // db.deleteAllQuotes();
+    // db.deleteDB();
     super.initState();
   }
 
-  addQuoteToDb() {
+  addQuoteToDb(db) {
     for (var quote in quotes) {
       db.addQuote(quote);
     }
+    print('Quote added!..');
   }
+
+  
 
   @override
   Widget build(BuildContext context) {
-    // var db = Provider.of<QuoteDB>(context);
-    // addQuoteToDb();
+    var db = Provider.of<SqliteDB>(context);
+    addQuoteToDb(db);
     SizeConfig.init(context);
     return Container(
       decoration: BoxDecoration(gradient: kStartGradientColor),
@@ -63,6 +69,7 @@ class _StartScreenState extends State<StartScreen> {
               Text(
                 'self care.',
                 style: startText,
+                textAlign: TextAlign.center,
               ),
               Text(
                 'self love.',

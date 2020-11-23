@@ -1,3 +1,5 @@
+import 'package:motivation_quotes/src/AppConfigurations/constants.dart';
+import 'package:motivation_quotes/src/controller/Quotes/quotesModel.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CatergoryBloc {
@@ -20,6 +22,10 @@ class CatergoryBloc {
   final _sport = BehaviorSubject<bool>.seeded(false);
   final _past = BehaviorSubject<bool>.seeded(false);
   final _passion = BehaviorSubject<bool>.seeded(false);
+  final _notificationCat = BehaviorSubject<String>.seeded(kLove);
+  final _quote = BehaviorSubject<List<Quote>>.seeded([Quote("", "", "", "")]);
+
+  final _addToFav = BehaviorSubject<bool>.seeded(false);
 
   // getter
   Stream<bool> get general => _general.stream;
@@ -40,10 +46,13 @@ class CatergoryBloc {
   Stream<bool> get sport => _sport.stream;
   Stream<bool> get past => _past.stream;
   Stream<bool> get passion => _passion.stream;
+  Stream<bool> get addToFav => _addToFav.stream;
+  Stream<List<Quote>> get quote => _quote.stream;
+  Stream<String> get notificationCat => _notificationCat.stream;
 
   //setter
   Function(bool) get changeGeneral => _general.sink.add;
-  Function(bool) get changeFavourite=> _favourite.sink.add;
+  Function(bool) get changeFavourite => _favourite.sink.add;
   Function(bool) get changeHardtimes => _hardtime.sink.add;
   Function(bool) get changeInspiration => _inspiration.sink.add;
   Function(bool) get changeLove => _love.sink.add;
@@ -60,8 +69,13 @@ class CatergoryBloc {
   Function(bool) get changeSport => _sport.sink.add;
   Function(bool) get changePast => _past.sink.add;
   Function(bool) get changePassion => _passion.sink.add;
+  Function(bool) get changeaddToFav => _addToFav.sink.add;
+  Function(List<Quote>) get changeQuote => _quote.sink.add;
+  Function(String) get changeNotificationCat => _notificationCat.sink.add;
 
   dispose() {
+    _notificationCat.close();
+    _quote.close();
     _general.close();
     _favourite.close();
     _hardtime.close();
@@ -80,5 +94,6 @@ class CatergoryBloc {
     _sport.close();
     _past.close();
     _passion.close();
+    _addToFav.close();
   }
 }

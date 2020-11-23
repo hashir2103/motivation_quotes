@@ -1,21 +1,18 @@
 class Quote {
-  Quote(
-    this.id,
-    this.body,
-    this.catergory,
-    this.author,
-  );
+  Quote(this.id, this.body, this.catergory, this.author, {this.isFav = 0});
 
   final String id;
   final String body;
   final String catergory;
   final String author;
+  final int isFav;
 
   factory Quote.fromMap(Map<String, dynamic> json) => Quote(
         json["id"],
         json["body"],
         json["catergory"],
         json["author"],
+        isFav: json['isfav'],
       );
 
   Map<String, dynamic> toMap() => {
@@ -23,27 +20,11 @@ class Quote {
         "body": body,
         "catergory": catergory,
         "author": author,
+        "isfav": isFav
       };
 }
 
-List<Map<String,int>> catergories = [
-  {'Past': 20},
-  {'Fitness': 10},
-  {'Productivity': 40},
-  {'love': 18,},
-  {'saying': 20},
-  {'Monday':19},
-  {'life':20},
-  {'Inspiration':19},
-  {'Hard times':99},
-  {'future':20},
-  {'birthday':20},
-  {'Night':20},
-  {'Travel':20},
-  {'Sport':20},
-  {'Passion':20},
-  {'Self-Esteem':19},
-];
+
 
 List<Quote> quotes = [
   Quote(
@@ -161,7 +142,7 @@ List<Quote> quotes = [
   Quote(
       '3',
       'Dictionary is incomplete because it doesn’t have a word which can describe how much I love you.',
-      'saying',
+      'love',
       'T.S Eliot'),
   Quote(
       '4',
@@ -228,6 +209,21 @@ List<Quote> quotes = [
       'When I walk into a room full of people, I always look for you first.',
       'love',
       'Michael Jordan'),
+  Quote(
+      '21',
+      'A friend is someone who knows all about you and still loves you.',
+      'love',
+      'Elbert Hubbard'),
+  Quote(
+      '22',
+      'It is better to be hated for what you are than to be loved for what you are not.',
+      'love',
+      'Andre Gide'),
+  Quote(
+      '23',
+      'As he read, I fell in love the way you fall asleep: slowly, and then all at once.',
+      'love',
+      'John Green'),
   Quote('2', 'Change the world by being yourself.', 'saying', 'Amy Poehler'),
   Quote('3', 'Every moment is a fresh beginning.', 'saying', 'T.S Eliot'),
   Quote('4', 'Never regret anything that made you smile.', 'saying',

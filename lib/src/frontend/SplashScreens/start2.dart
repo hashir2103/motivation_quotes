@@ -1,11 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:motivation_quotes/src/backend/ReminderPref.dart';
+import 'package:motivation_quotes/src/AppConfigurations/constants.dart';
 import 'package:motivation_quotes/src/AppConfigurations/Colors.dart';
 import 'package:motivation_quotes/src/AppConfigurations/TextStyles.dart';
+import 'package:motivation_quotes/src/backend/sqliteDB.dart';
+import 'package:motivation_quotes/src/controller/Notification/Notification.dart';
+import 'package:motivation_quotes/src/controller/Notification/Notification_Manager.dart';
+import 'package:motivation_quotes/src/controller/Notification/reminderModel.dart';
 import 'package:motivation_quotes/src/frontend/SplashScreens/SplashScreen.dart';
+import 'package:motivation_quotes/src/frontend/_widgets/customDailog.dart';
 import 'package:motivation_quotes/src/frontend/_widgets/startButton.dart';
+import 'package:provider/provider.dart';
 
 class StartScreen2 extends StatefulWidget {
   @override
@@ -17,23 +23,34 @@ class _StartScreen2State extends State<StartScreen2>
   int notificationCount = 10;
   DateTime _startTime;
   DateTime _endTime;
+
   @override
   void initState() {
-    initTimeSettings();
-    saveNotificationCount(notificationCount);
-    saveTimeValue();
+    var db = Provider.of<SqliteDB>(context, listen: false);
+    initTimeSettings(db);
     super.initState();
   }
 
-  initTimeSettings() {
+  initTimeSettings(SqliteDB db) {
     DateTime now = DateTime.now();
-    _startTime = DateTime(now.year, now.month, now.day, now.hour, now.minute);
+    _startTime =
+        DateTime(now.year, now.month, now.day, now.hour + 1, now.minute);
     _endTime =
         DateTime(now.year, now.month, now.day, now.hour + 11, now.minute);
+    var reminder = ReminderModel(
+        key: 1,
+        reminderCount: notificationCount,
+        startTime: _startTime.toString(),
+        endTime: _endTime.toString(),
+        typeOfquote: kLove,
+        isUsingAppFirstTime: 1);
+    db.addReminder(reminder);
   }
 
   @override
   Widget build(BuildContext context) {
+    var db = Provider.of<SqliteDB>(context);
+    var notificationSchedule = Provider.of<NotificationManager>(context);
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       backgroundColor: Color(0xFFe2f0f3),
@@ -101,7 +118,27 @@ class _StartScreen2State extends State<StartScreen2>
                       ),
                       Buttons.startButton(
                         'Continue',
-                        () {
+                        () async {
+                          var reminder = ReminderModel(
+                              key: 1,
+                              reminderCount: notificationCount,
+                              startTime: _startTime.toString(),
+                              endTime: _endTime.toString(),
+                              typeOfquote: kLove,
+                              isUsingAppFirstTime: 1);
+                          db.updateReminder(reminder);
+                          var listquote = await db.getQuoteByCatergory(kLove);
+                          List<AppNotification> listNotification = [];
+                          for (var i = 0; i < notificationCount; i++) {
+                            listNotification.add(AppNotification(
+                                notificationID: i,
+                                notificationTitle: "Daily Motivation",
+                                notificationBody: listquote[i].body,
+                                channel: NotificationManager
+                                    .scheduledNotificationChannels[0]));
+                          }
+                          notificationSchedule.scheduleNotification(
+                              listNotification, db);
                           Navigator.pushReplacement(
                               context,
                               CupertinoPageRoute(
@@ -151,7 +188,6 @@ class _StartScreen2State extends State<StartScreen2>
                 if (notificationCount > 0) {
                   notificationCount = notificationCount - 1;
                 }
-                saveNotificationCount(notificationCount);
               });
             },
           ),
@@ -167,7 +203,6 @@ class _StartScreen2State extends State<StartScreen2>
                 if (notificationCount < 20) {
                   notificationCount = notificationCount + 1;
                 }
-                saveNotificationCount(notificationCount);
               });
             },
           ),
@@ -201,26 +236,50 @@ class _StartScreen2State extends State<StartScreen2>
           );
         });
     if (time != null) {
-      setState(() {
-        if (endTime == true) {
-          _endTime =
-              DateTime(now.year, now.month, now.day, time.hour, time.minute);
+      if (endTime == true) {
+        var pickedTime =
+            DateTime(now.year, now.month, now.day, time.hour, time.minute);
+        if (pickedTime.isBefore(_startTime)) {
+          showDialog(
+              context: context,
+              builder: (context) {
+                return CustomDailogBox(
+                  description: 'End time cannot be less than Start time!',
+                );
+              });
         } else {
-          _startTime =
-              DateTime(now.year, now.month, now.day, time.hour, time.minute);
+          setState(() {
+            _endTime = pickedTime;
+          });
         }
-      });
+      } else {
+        var pickedTime =
+            DateTime(now.year, now.month, now.day, time.hour, time.minute);
+        if (pickedTime.isAfter(_endTime)) {
+          showDialog(
+              context: context,
+              builder: (context) {
+                return CustomDailogBox(
+                  description: 'Start time cannot great than End time!',
+                );
+              });
+        } else {
+          setState(() {
+            if (pickedTime.isBefore(DateTime.now())) {
+              _startTime = DateTime(
+                  now.year, now.month, now.day + 1, time.hour, time.minute);
+              _endTime = DateTime(now.year, now.month, now.day + 1,
+                  _endTime.hour, _endTime.minute);
+            } else {
+              _startTime = DateTime(
+                  now.year, now.month, now.day, time.hour, time.minute);
+              _endTime = DateTime(now.year, now.month, now.day,
+                  _endTime.hour, _endTime.minute);
+            }
+          });
+        }
+      }
     }
-    saveTimeValue();
-  }
-
-  saveNotificationCount(value) async {
-    await ReminderPrefs().setNotificationCount(value);
-  }
-
-  saveTimeValue() async {
-    await ReminderPrefs().setstartTime(_startTime.toString());
-    await ReminderPrefs().setendTime(_endTime.toString());
   }
 }
 

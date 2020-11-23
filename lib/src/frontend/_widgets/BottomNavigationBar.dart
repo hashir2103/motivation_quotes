@@ -23,25 +23,25 @@ class BottomNavigation extends StatelessWidget {
             context,
             Catergory(),
             icon: 'grid.svg',
-            label: 'Catergories',
+            label: '  Catergories ',
           ),
           navItems(
             context,
             AppThemes(),
             icon: 'theme.svg',
-            label: 'Themes',
+            label: '     Themes     ',
           ),
           navItems(
             context,
             Reminder(),
             icon: 'Bell.svg',
-            label: 'Reminder',
+            label: '   Reminder   ',
           ),
           navItems(
             context,
             Profile(),
             icon: 'User.svg',
-            label: 'Profile',
+            label: '      Profile      ',
           )
         ],
       ),
@@ -51,36 +51,39 @@ class BottomNavigation extends StatelessWidget {
   navItems(context, Widget widget,
       {@required String icon, @required String label}) {
     return GestureDetector(
-          onTap: () {
-            showModalBottomSheet(
-              elevation: 0,
-              isScrollControlled: true,
-              isDismissible: false,
-              backgroundColor: kPrimaryColor,
-                context: context,
-                builder: (context) {
-                  return widget;
-                });
-          },
-          child: Container(
-            width: MediaQuery.of(context).size.width/4,
-            child: Center(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    SvgPicture.asset(
-                      'assets/icons/$icon',
-                      color: Colors.white,
-                      height: getProportionateScreenHeight(
-                          SizeConfig.screenHeight * 0.03),
-                    ),
-                    Text(
-                      label,
-                      style: navText(),
-                    ),
-                  ]),
-            ),
+      onTap: () {
+        showModalBottomSheet(
+            elevation: 0,
+            isScrollControlled: true,
+            isDismissible: false,
+            backgroundColor: kPrimaryColor,
+            context: context,
+            builder: (context) {
+              return widget;
+            });
+      },
+      child: Container(
+          width: MediaQuery.of(context).size.width/4,
+          // padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Center(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    'assets/icons/$icon',
+                    color: Colors.white,
+                    height: getProportionateScreenHeight(
+                        SizeConfig.screenHeight * 0.03),
+                  ),
+                  Text(
+                    label,
+                    style: navText(),
+                  ),
+                ]),
           ),
-        );
+        ),
+      
+    );
   }
 }

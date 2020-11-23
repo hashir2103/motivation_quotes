@@ -16,6 +16,7 @@ const kStartGradientColor = LinearGradient(
   colors: [Color(0xFFd4e3e7),Color(0xFF6a769a),Color(0xFF8fa0b7),Color(0xFF8681ae), Color(0xFF7c9cb6)],
 );
 
+
 const kStart2GradientColor = LinearGradient(
   begin: Alignment.topLeft,
   end: Alignment.bottomCenter,

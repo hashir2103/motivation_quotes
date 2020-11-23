@@ -23,7 +23,7 @@ TextStyle get startText {
 
 TextStyle get startText2 {
   return GoogleFonts.lato(
-      textStyle: TextStyle(fontSize: 22),
+      textStyle: TextStyle(fontSize: 20),
       color: Colors.black,
       fontWeight: FontWeight.w700);
 }
@@ -46,7 +46,7 @@ TextStyle navText() {
 // Quotes text
 TextStyle get quoteText {
   return GoogleFonts.sourceCodePro(
-      textStyle: TextStyle(fontSize: 24),
+      textStyle: TextStyle(fontSize: 30),
       color: Colors.white,
       // fontWeight: FontWeight.w700
       );
@@ -69,8 +69,37 @@ TextStyle get appBarTitle {
 // Category label
 TextStyle get catergoryLabel {
   return GoogleFonts.inconsolata(
-      textStyle: TextStyle(fontSize: 26),
+      textStyle: TextStyle(fontSize: 20),
       color: Colors.white,
       fontStyle: FontStyle.italic,
       );
+}
+
+//Reminder 
+TextStyle get reminderText {
+  return GoogleFonts.roboto(
+      textStyle: TextStyle(fontSize: 20),
+      color: Colors.white,
+    );
+}
+TextStyle get reminderAlert {
+  return GoogleFonts.sourceCodePro(
+      textStyle: TextStyle(fontSize: 20),
+      color: Colors.white,
+      fontWeight: FontWeight.w100);
+}
+
+TextStyle get reminderTextsmall {
+  return GoogleFonts.lato(
+      textStyle: TextStyle(fontSize: 18),
+      color: Colors.white,
+      fontWeight: FontWeight.bold);
+}
+
+
+TextStyle get alertText {
+  return GoogleFonts.lato(
+      textStyle: TextStyle(fontSize: 16),
+      color: Colors.white,
+      fontWeight: FontWeight.bold);
 }
