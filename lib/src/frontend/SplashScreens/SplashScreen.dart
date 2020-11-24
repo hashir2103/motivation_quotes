@@ -142,7 +142,7 @@ class Text2 extends StatelessWidget {
     return AnimatedSplashScreen(
         animationDuration: Duration(milliseconds: 2500),
         duration: 2500,
-        splashTransition: SplashTransition.slideTransitionReverse,
+        splashTransition: SplashTransition.slideTransition,
         backgroundColor: kPrimaryColor,
         curve: Curves.easeInOutBack,
         nextScreen: Text3(),
