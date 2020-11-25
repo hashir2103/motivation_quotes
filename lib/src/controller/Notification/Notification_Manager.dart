@@ -5,6 +5,7 @@ import 'package:motivation_quotes/src/backend/sqliteDB.dart';
 import 'package:rxdart/rxdart.dart';
 import 'Notification_Channel.dart';
 import 'Notification.dart' as custom;
+import 'dart:io' as Platform;
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -56,16 +57,25 @@ class NotificationManager {
   NotificationManager.initNotificationManager() {
     tz.initializeTimeZones();
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    if (Platform.Platform.isIOS) {
+      flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+              IOSFlutterLocalNotificationsPlugin>()
+          .requestPermissions(alert: true, badge: true, sound: true);
+    }
     initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
     initializationSettingsIOS = IOSInitializationSettings(
+        requestSoundPermission: true,
+        requestAlertPermission: true,
+        requestBadgePermission: true,
         onDidReceiveLocalNotification: (id, title, body, payload) async {
-      var notification = custom.AppNotification(
-          notificationID: id,
-          notificationTitle: title,
-          notificationBody: body,
-          channel: scheduledNotificationChannels[0]);
-      _didRecieveNotification.add(notification);
-    });
+          var notification = custom.AppNotification(
+              notificationID: id,
+              notificationTitle: title,
+              notificationBody: body,
+              channel: scheduledNotificationChannels[0]);
+          _didRecieveNotification.add(notification);
+        });
     initializationSettings = InitializationSettings(
         android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
   }
@@ -88,22 +98,21 @@ class NotificationManager {
     var timeList = await scheduleTimeList(db);
     for (int i = 0; i < timeList.length; i++) {
       var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        notifications[i].channel.channelID,
-        notifications[i].channel.channelName,
-        notifications[i].channel.channelDescription,
-        icon: 'app_icon',
-        sound: RawResourceAndroidNotificationSound(
-            notifications[i].channel.soundName),
-        // largeIcon: DrawableResourceAndroidBitmap('app_icon'),
-        // maxProgress: 2,
-        autoCancel: false,
-        enableLights: true,
-        playSound: notifications[i].channel.hasSound,
-        // color: Colors.green,
-        ledColor: const Color.fromARGB(255, 255, 0, 0),
-        ledOnMs: 1000,
-        ledOffMs: 500
-      );
+          notifications[i].channel.channelID,
+          notifications[i].channel.channelName,
+          notifications[i].channel.channelDescription,
+          icon: 'app_icon',
+          sound: RawResourceAndroidNotificationSound(
+              notifications[i].channel.soundName),
+          // largeIcon: DrawableResourceAndroidBitmap('app_icon'),
+          // maxProgress: 2,
+          autoCancel: false,
+          enableLights: true,
+          playSound: notifications[i].channel.hasSound,
+          // color: Colors.green,
+          ledColor: const Color.fromARGB(255, 255, 0, 0),
+          ledOnMs: 1000,
+          ledOffMs: 500);
 
       var iOSPlatformChannelSpecifics =
           IOSNotificationDetails(sound: 'slow_spring_board.aiff');
@@ -128,14 +137,14 @@ class NotificationManager {
     List<tz.TZDateTime> timeList = [];
     var rem = await db.getReminder();
     var notificationCount = rem.reminderCount;
-    var startTime = rem.startTime.substring(0,19);
-    var endTime = rem.endTime.substring(0,19);
+    var startTime = rem.startTime.substring(0, 19);
+    var endTime = rem.endTime.substring(0, 19);
     var tzStartTime = tz.TZDateTime.parse(tz.local, startTime);
     var tzEndTime = tz.TZDateTime.parse(tz.local, endTime);
     var diff = tzEndTime.difference(tzStartTime);
     var diffInMircoseconds = (diff.inMicroseconds / notificationCount).ceil();
     var duration = Duration(microseconds: diffInMircoseconds);
-    for (int i = 1; i < notificationCount +1; i++) {
+    for (int i = 1; i < notificationCount + 1; i++) {
       timeList.add(tzStartTime.add(duration * i));
     }
     return timeList;
