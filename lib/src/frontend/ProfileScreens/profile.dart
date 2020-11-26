@@ -1,16 +1,10 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:motivation_quotes/src/AppConfigurations/Colors.dart';
 import 'package:motivation_quotes/src/AppConfigurations/TextStyles.dart';
-import 'package:motivation_quotes/src/AppConfigurations/constants.dart';
-import 'package:motivation_quotes/src/backend/sqliteDB.dart';
-import 'package:motivation_quotes/src/controller/Catergories/catergoryContoller.dart';
-import 'package:motivation_quotes/src/controller/collection/ProfileController.dart';
-import 'package:motivation_quotes/src/controller/Quotes/quotesModel.dart';
-import 'package:provider/provider.dart';
-import 'package:share/share.dart';
+import 'package:motivation_quotes/src/frontend/ProfileScreens/addOwnQuote.dart';
+import 'package:motivation_quotes/src/frontend/ProfileScreens/favourite.dart';
+import 'package:motivation_quotes/src/frontend/ProfileScreens/myQuote.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -23,8 +17,6 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    var db = Provider.of<SqliteDB>(context);
-    var profBloc = Provider.of<ProfileBloc>(context);
     return Scaffold(
         appBar: myAppbar(context),
         body: Padding(
@@ -52,7 +44,7 @@ class _ProfileState extends State<Profile> {
                 Container(
                   height: MediaQuery.of(context).size.height * 0.04,
                 ),
-                myFavourite(profBloc, db),
+                isFav? MyFav() : MyQuote()
               ],
             )));
   }
@@ -85,170 +77,7 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  StreamBuilder<bool> myFavourite(ProfileBloc profBloc, SqliteDB db) {
-    return StreamBuilder<bool>(
-        stream: profBloc.removeFav,
-        builder: (context, snapshot) {
-          return FutureBuilder<List<Quote>>(
-              future: db.getFav(),
-              builder: (context, snapshot) {
-                if (snapshot.data == null || snapshot.data.isEmpty) {
-                  return myCarosuel(true, [1]);
-                }
-                var list = [
-                  for (var i = 0; i < snapshot.data.length; i += 1) i
-                ];
-                return myCarosuel(false, list, quotes: snapshot.data);
-              });
-        });
-  }
-
-  Widget myCarosuel(bool isempty, List<int> items, {List<Quote> quotes}) {
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.6,
-      child: CarouselSlider(
-        options: CarouselOptions(
-          enableInfiniteScroll: false,
-          height: MediaQuery.of(context).size.height * 0.5,
-          scrollDirection: Axis.horizontal,
-          enlargeCenterPage: true,
-        ),
-        items: isempty
-            ? items.map((i) => placeHolder()).toList()
-            : items.map((i) {
-                print('loop iteration : $i');
-                return myBuilder(quotes[i]);
-              }).toList(),
-      ),
-    );
-  }
-
-  Widget placeHolder() {
-    return Builder(builder: (context) {
-      return Container(
-          width: MediaQuery.of(context).size.width * 0.8,
-          margin: EdgeInsets.symmetric(horizontal: 5.0),
-          padding: EdgeInsets.symmetric(horizontal: 12),
-          decoration: BoxDecoration(color: Colors.grey.withOpacity(0.5)),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () =>
-                    Navigator.pushReplacementNamed(context, kHomeScreen),
-                child: SvgPicture.asset(
-                  'assets/icons/PlusIcon.svg',
-                  color: kIconColor,
-                  height: 70,
-                ),
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              Text(
-                isFav
-                    ? 'Add Favourite Quotes To Your Collection.'
-                    : 'Write Your Own Thoughts\nThis will be only visble to you.',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 18.0, color: Colors.grey),
-              ),
-            ],
-          ));
-    });
-  }
-
-  Widget myBuilder(Quote quote) {
-    print('Data : ${quote.body}');
-    return Builder(
-      builder: (BuildContext context) {
-        var db = Provider.of<SqliteDB>(context);
-        var profBloc = Provider.of<ProfileBloc>(context);
-        var catBloc = Provider.of<CatergoryBloc>(context);
-        return Container(
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            width: MediaQuery.of(context).size.width * 0.8,
-            margin: EdgeInsets.symmetric(horizontal: 5.0),
-            decoration: BoxDecoration(color: Colors.grey.withOpacity(0.5)),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        quote.body,
-                        style: favouriteQuoteText,
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Text(
-                        '~${quote.author}',
-                        style: favauthorText,
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        IconButton(
-                          icon: Icon(
-                            Icons.share,
-                            size: 35,
-                            color: Colors.greenAccent,
-                          ),
-                          onPressed: () {
-                            final RenderBox box = context.findRenderObject();
-                            Share.share("${quote.body} \n ~${quote.author}",
-                                subject: "MyFavouriteQuote",
-                                sharePositionOrigin:
-                                    box.localToGlobal(Offset(0, 50)) &
-                                        box.size);
-                          },
-                        ),
-                        IconButton(
-                            icon: Icon(
-                              Icons.delete,
-                              size: 35,
-                              color: Colors.redAccent,
-                            ),
-                            onPressed: () {
-                              profBloc.changeRemoveFav(true);
-                              List<Quote> list = [];
-                              db.updateQuote(Quote(quote.id, quote.body,
-                                  quote.catergory, quote.author,
-                                  isFav: 0));
-                              var l = catBloc.quoteListValue;
-                              for (var i = 0; i < l.length; i++) {
-                                if (l[i].body == quote.body) {
-                                } else {
-                                  list.add(l[i]);
-                                }
-                              }
-                              catBloc.changeQuote(list);
-                            }),
-                      ],
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 15,
-                )
-              ],
-            ));
-      },
-    );
-  }
-
+  
   static const _alignments = [
     Alignment.topLeft,
     Alignment.topRight,
@@ -314,6 +143,12 @@ class _ProfileState extends State<Profile> {
           isFav = false;
           index = 1;
         });
+      },
+      onDoubleTap: () {
+        showDialog(
+          context: context,
+          builder: (context) => AddOwnQuote(),
+        );
       },
       child: AnimatedContainer(
           duration: Duration(milliseconds: 250),

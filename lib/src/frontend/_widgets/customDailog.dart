@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:motivation_quotes/src/AppConfigurations/TextStyles.dart';
 
 class CustomDailogBox extends StatefulWidget {
-  final String title, description;
-  CustomDailogBox({this.title, this.description});
+  final description;
+  CustomDailogBox({@required this.description});
 
   @override
   _CustomDailogBoxState createState() => _CustomDailogBoxState();

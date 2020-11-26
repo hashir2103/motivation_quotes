@@ -48,6 +48,8 @@ TextStyle get quoteText {
   return GoogleFonts.josefinSans(
       textStyle: TextStyle(fontSize: 30),
       color: Colors.white,
+      wordSpacing: 1.2,
+      letterSpacing: 1.5
       // fontWeight: FontWeight.w700
       );
 }

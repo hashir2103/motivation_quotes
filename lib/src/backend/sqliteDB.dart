@@ -21,7 +21,7 @@ class SqliteDB {
   String quoteTable = 'quotes';
   String myCategories = 'mycategories';
   String reminderTable = 'reminder';
-  String ownQuoteTable = 'reminder';
+  String ownQuoteTable = 'ownQuoteTable';
 
   //Columns quotetable
   String quoteId = 'id';
@@ -97,9 +97,8 @@ class SqliteDB {
 
     await db.execute('''
       CREATE TABLE $ownQuoteTable(
-        $key INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
         $quote TEXT,
-        $author TEXT,
+        $author TEXT
       )''');
 
     print("TABLE created");
