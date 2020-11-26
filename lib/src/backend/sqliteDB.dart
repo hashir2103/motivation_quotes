@@ -1,6 +1,7 @@
 import 'package:motivation_quotes/src/controller/Catergories/catergoryModel.dart';
 import 'package:motivation_quotes/src/controller/Notification/reminderModel.dart';
 import 'package:motivation_quotes/src/controller/Quotes/quotesModel.dart';
+import 'package:motivation_quotes/src/controller/collection/ownQuote.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -20,6 +21,7 @@ class SqliteDB {
   String quoteTable = 'quotes';
   String myCategories = 'mycategories';
   String reminderTable = 'reminder';
+  String ownQuoteTable = 'reminder';
 
   //Columns quotetable
   String quoteId = 'id';
@@ -31,6 +33,10 @@ class SqliteDB {
   //Columns categoryTable
   String catergoryName = "catName";
   String catergoryShow = 'showCat';
+
+  //Columns own quote
+  String quote = 'quote';
+  String author = 'author';
 
   //Coumns Reminder
   String key = 'key';
@@ -89,6 +95,13 @@ class SqliteDB {
         $isUsingAppFirstTime INTEGER
       )''');
 
+    await db.execute('''
+      CREATE TABLE $ownQuoteTable(
+        $key INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+        $quote TEXT,
+        $author TEXT,
+      )''');
+
     print("TABLE created");
   }
 
@@ -119,7 +132,41 @@ class SqliteDB {
     print("New User: ${rem.isUsingAppFirstTime}");
   }
 
-//
+//ownQuote
+  addOwnQuote(OwnQuote quote) async {
+    var dbClient = await db;
+    await dbClient.insert(ownQuoteTable, quote.toMap());
+  }
+
+  Future<List<OwnQuote>> getOwnQuote() async {
+    List<OwnQuote> _cat = [];
+    var dbClient = await db;
+    var result = await dbClient.query(ownQuoteTable, columns: [quote, author]);
+    result.forEach((element) {
+      var cat = OwnQuote.fromMap(element);
+      _cat.add(cat);
+    });
+    return _cat;
+  }
+
+  updateOwnQuote(OwnQuote quote) async {
+    var dbClient = await db;
+    await dbClient.update(
+      ownQuoteTable,
+      quote.toMap(),
+      where: '$quote = ?',
+      whereArgs: [quote.quote],
+    );
+  }
+
+  deleteOwnQuote(OwnQuote quote) async {
+    var dbClient = await db;
+    await dbClient
+        .delete(ownQuoteTable, where: '$quote= ?', whereArgs: [quote.quote]);
+    print("All quote Deleted");
+  }
+
+//quote
   addQuote(Quote quote) async {
     var dbClient = await db;
     var result = await dbClient.insert(quoteTable, quote.toMap());
@@ -229,8 +276,8 @@ class SqliteDB {
   Future<List<Quote>> getFav() async {
     List<Quote> _quotes = [];
     var dbClient = await db;
-    var result = await dbClient.query(quoteTable,
-        where: '$isFav = ?', whereArgs: [1]);
+    var result =
+        await dbClient.query(quoteTable, where: '$isFav = ?', whereArgs: [1]);
     result.forEach((element) {
       var quote = Quote.fromMap(element);
       _quotes.add(quote);

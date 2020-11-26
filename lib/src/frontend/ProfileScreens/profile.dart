@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:motivation_quotes/src/AppConfigurations/Colors.dart';
 import 'package:motivation_quotes/src/AppConfigurations/TextStyles.dart';
+import 'package:motivation_quotes/src/AppConfigurations/constants.dart';
 import 'package:motivation_quotes/src/backend/sqliteDB.dart';
 import 'package:motivation_quotes/src/controller/Catergories/catergoryContoller.dart';
-import 'package:motivation_quotes/src/controller/ProfileController.dart';
+import 'package:motivation_quotes/src/controller/collection/ProfileController.dart';
 import 'package:motivation_quotes/src/controller/Quotes/quotesModel.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
@@ -25,66 +26,81 @@ class _ProfileState extends State<Profile> {
     var db = Provider.of<SqliteDB>(context);
     var profBloc = Provider.of<ProfileBloc>(context);
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: kPrimaryColor,
-          toolbarHeight: 100,
-          title: Padding(
-            padding: const EdgeInsets.only(top: 17.0),
-            child: Text(
-              'Collection',
-              style: appBarTitle,
-            ),
-          ),
-          centerTitle: true,
-          leading: Padding(
-            padding: const EdgeInsets.only(top: 17.0),
-            child: IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios,
-                color: kIconColor,
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ),
-        ),
+        appBar: myAppbar(context),
         body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 14.0),
             child: ListView(
+              reverse: true,
               children: [
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.15,
+                  height: MediaQuery.of(context).size.height * 0.04,
+                ),
+                Column(
+                  children: [marker()],
+                ),
+                SizedBox(
+                  height: 4,
+                ),
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.17,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [fav(), own()],
                   ),
                 ),
-                Column(children: [marker()],),
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.03,
+                  height: MediaQuery.of(context).size.height * 0.04,
                 ),
-                StreamBuilder<bool>(
-                    stream: profBloc.removeFav,
-                    builder: (context, snapshot) {
-                      return FutureBuilder<List<Quote>>(
-                          future: db.getFav(),
-                          builder: (context, snapshot) {
-                            if (snapshot.data == null ||
-                                snapshot.data.isEmpty) {
-                              return myCarosuel(true, [1]);
-                            }
-                            var list = [
-                              for (var i = 0; i < snapshot.data.length; i += 1)
-                                i
-                            ];
-                            return myCarosuel(false, list,
-                                quotes: snapshot.data);
-                          });
-                    }),
+                myFavourite(profBloc, db),
               ],
             )));
+  }
+
+  AppBar myAppbar(BuildContext context) {
+    return AppBar(
+      elevation: 0,
+      backgroundColor: kPrimaryColor,
+      toolbarHeight: 100,
+      title: Padding(
+        padding: const EdgeInsets.only(top: 17.0),
+        child: Text(
+          'Collection',
+          style: appBarTitle,
+        ),
+      ),
+      centerTitle: true,
+      leading: Padding(
+        padding: const EdgeInsets.only(top: 17.0),
+        child: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: kIconColor,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
+    );
+  }
+
+  StreamBuilder<bool> myFavourite(ProfileBloc profBloc, SqliteDB db) {
+    return StreamBuilder<bool>(
+        stream: profBloc.removeFav,
+        builder: (context, snapshot) {
+          return FutureBuilder<List<Quote>>(
+              future: db.getFav(),
+              builder: (context, snapshot) {
+                if (snapshot.data == null || snapshot.data.isEmpty) {
+                  return myCarosuel(true, [1]);
+                }
+                var list = [
+                  for (var i = 0; i < snapshot.data.length; i += 1) i
+                ];
+                return myCarosuel(false, list, quotes: snapshot.data);
+              });
+        });
   }
 
   Widget myCarosuel(bool isempty, List<int> items, {List<Quote> quotes}) {
@@ -118,16 +134,22 @@ class _ProfileState extends State<Profile> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SvgPicture.asset(
-                'assets/icons/PlusIcon.svg',
-                color: kIconColor,
-                height: 70,
+              GestureDetector(
+                onTap: () =>
+                    Navigator.pushReplacementNamed(context, kHomeScreen),
+                child: SvgPicture.asset(
+                  'assets/icons/PlusIcon.svg',
+                  color: kIconColor,
+                  height: 70,
+                ),
               ),
               SizedBox(
-                height: 20,
+                height: 25,
               ),
               Text(
-                'No Favorite Quote yet.\n Add Favourite Quote to your Collection.',
+                isFav
+                    ? 'Add Favourite Quotes To Your Collection.'
+                    : 'Write Your Own Thoughts\nThis will be only visble to you.',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 18.0, color: Colors.grey),
               ),
@@ -240,13 +262,11 @@ class _ProfileState extends State<Profile> {
       duration: Duration(milliseconds: 250),
       alignment: _alignment(),
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal:22),
+        margin: EdgeInsets.symmetric(horizontal: 22),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: Colors.grey
-        ),
-        height: 2,
-        width: width/2.6,
+            borderRadius: BorderRadius.circular(20), color: Colors.grey),
+        height: 1,
+        width: width / 2.6,
       ),
     );
   }
@@ -266,7 +286,7 @@ class _ProfileState extends State<Profile> {
           width: isFav ? width / 2.4 : width / 2.5,
           decoration: BoxDecoration(
             color: Colors.grey.withOpacity(0.2),
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: BorderRadius.circular(20),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -301,7 +321,7 @@ class _ProfileState extends State<Profile> {
           width: isFav ? width / 2.5 : width / 2.4,
           decoration: BoxDecoration(
             color: Colors.grey.withOpacity(0.2),
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: BorderRadius.circular(20),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

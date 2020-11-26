@@ -108,6 +108,7 @@ class NotificationManager {
           // maxProgress: 2,
           autoCancel: false,
           enableLights: true,
+          styleInformation: BigTextStyleInformation(''),
           playSound: notifications[i].channel.hasSound,
           // color: Colors.green,
           ledColor: const Color.fromARGB(255, 255, 0, 0),

@@ -9,7 +9,7 @@ import 'package:motivation_quotes/src/controller/Catergories/catergoryContoller.
 import 'package:motivation_quotes/src/controller/Notification/Notification_Manager.dart';
 import 'package:motivation_quotes/src/controller/Notification/reminderController.dart';
 import 'package:motivation_quotes/src/controller/Notification/reminderModel.dart';
-import 'package:motivation_quotes/src/controller/ProfileController.dart';
+import 'package:motivation_quotes/src/controller/collection/ProfileController.dart';
 import 'package:motivation_quotes/src/frontend/SplashScreens/SplashScreen.dart';
 import 'package:motivation_quotes/src/frontend/SplashScreens/start.dart';
 import 'package:provider/provider.dart';
