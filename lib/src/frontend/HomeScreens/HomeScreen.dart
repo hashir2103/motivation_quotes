@@ -11,6 +11,7 @@ import 'package:motivation_quotes/src/controller/Catergories/catergoryModel.dart
 import 'package:motivation_quotes/src/controller/Notification/Notification_Manager.dart';
 import 'package:motivation_quotes/src/controller/Notification/reminderController.dart';
 import 'package:motivation_quotes/src/controller/Quotes/quotesModel.dart';
+import 'package:motivation_quotes/src/controller/collection/ProfileController.dart';
 import 'package:motivation_quotes/src/frontend/_widgets/BottomNavigationBar.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
@@ -64,21 +65,42 @@ class _HomeScreenState extends State<HomeScreen> {
     var db = Provider.of<SqliteDB>(context);
     var nm = Provider.of<NotificationManager>(context);
     var remBloc = Provider.of<ReminderBloc>(context);
+    var profBloc = Provider.of<ProfileBloc>(context);
     timer = Timer.periodic(Duration(days: 1),
         (timer) => remBloc.setUpNotificationReminer(db, nm, remBloc));
     return Scaffold(
-      body: StreamBuilder<bool>(
-          stream: catStream,
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return Body(
-                db: db,
-              );
-            }
-            return Body(
-              db: db,
-            );
-          }),
+      body: Stack(
+        children: [
+          StreamBuilder<String>(
+              stream: profBloc.apptheme,
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Container();
+                }
+                if (snapshot.data == null) {
+                  return Container();
+                }
+                return Container(
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage("assets/themes/${snapshot.data}"),
+                          fit: BoxFit.cover)),
+                );
+              }),
+          StreamBuilder<bool>(
+              stream: catStream,
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Body(
+                    db: db,
+                  );
+                }
+                return Body(
+                  db: db,
+                );
+              }),
+        ],
+      ),
       bottomNavigationBar: BottomNavigation(),
     );
   }
