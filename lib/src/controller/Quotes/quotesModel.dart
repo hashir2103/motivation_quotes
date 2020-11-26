@@ -24,8 +24,6 @@ class Quote {
       };
 }
 
-
-
 List<Quote> quotes = [
   Quote(
       '1',
@@ -1162,67 +1160,6 @@ List<Quote> quotes = [
       'Breathe darling, this is just a chapter. It’s not your whole story.',
       'Self-Esteem',
       ' S.C. Laurie'),
-  Quote('1', "It's not knowing what to do, it's doing what you know.",
-      'Productivity', 'Tony Robbins'),
-  Quote('2', 'Focus on being productive instead of busy.', 'Productivity',
-      'Tim Ferriss'),
-  Quote(
-      '3',
-      "The key is not to prioritize what's on your schedule, but to schedule your priorities.",
-      'Productivity',
-      'Stephen Covey'),
-  Quote(
-      '4',
-      'Ordinary people think merely of spending time, great people think of using it.',
-      'Productivity',
-      'Arthur Schopenhauer'),
-  Quote('5', ' Your mind is for having ideas, not holding them.',
-      'Productivity', ' David Allen '),
-  Quote(
-      '6',
-      "Success is often achieved by those who don't know that failure is inevitable.",
-      'Productivity',
-      'Coco Chanel'),
-  Quote(
-      '7',
-      "If you don't pay appropriate attention to what has your attention, it will take more of your attention than it deserves.",
-      'Productivity',
-      'David Allen'),
-  Quote('8', 'Action is the foundational key to all success.', 'Productivity',
-      'Pablo Picasso'),
-  Quote(
-      '9',
-      'Productivity is never an accident. It is always the result of a commitment to excellence, intelligent planning, and focused effort.',
-      'Productivity',
-      'Paul J. Meyer'),
-  Quote('10', 'The best way out is always through.', 'Productivity',
-      'Robert Frost'),
-  Quote(
-      '11',
-      "It's not always that we need to do more but rather that we need to focus on less.",
-      'Productivity',
-      'Nathan W. Morris'),
-  Quote(
-      '12',
-      'Productivity is being able to do things that you were never able to do before.',
-      'Productivity',
-      'Franz Kafka'),
-  Quote('13', 'Life is too complicated not to be orderly.', 'Productivity',
-      'Martha Stewart'),
-  Quote('14', "You don't need a new plan for next year. You need a commitment.",
-      'Productivity', 'Seth Godin'),
-  Quote('15', "Until we can manage time, we can manage nothing else ",
-      'Productivity', 'Peter Drucker'),
-  Quote('16', "Great acts are made up of small deeds.", 'Productivity',
-      'Lao Tzu'),
-  Quote('17', "Don't wait. The time will never be just right.", 'Productivity',
-      'Napoleon Hill'),
-  Quote('18', "Effective performance is preceded by painstaking preparation ",
-      'Productivity', 'Brian Tracy '),
-  Quote('19', 'The way to get started is to quit talking and begin doing.',
-      'Productivity', ' Walt Disney'),
-  Quote('20', 'Plans are nothing; planning is everything.', 'Productivity',
-      'Dwight D. Eisenhower'),
   Quote('1', "I like the night. Without the dark, we'd never see the stars.",
       'Night', 'Stephenie Meyer'),
   Quote(

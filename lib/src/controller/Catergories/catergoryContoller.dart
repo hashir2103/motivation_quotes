@@ -73,6 +73,10 @@ class CatergoryBloc {
   Function(List<Quote>) get changeQuote => _quote.sink.add;
   Function(String) get changeNotificationCat => _notificationCat.sink.add;
 
+  //Func
+  List<Quote> get quoteListValue => _quote.value;
+
+  //dispose
   dispose() {
     _notificationCat.close();
     _quote.close();

@@ -8,6 +8,8 @@ import 'package:motivation_quotes/src/AppConfigurations/TextStyles.dart';
 import 'package:motivation_quotes/src/backend/sqliteDB.dart';
 import 'package:motivation_quotes/src/controller/Catergories/catergoryContoller.dart';
 import 'package:motivation_quotes/src/controller/Catergories/catergoryModel.dart';
+import 'package:motivation_quotes/src/controller/Notification/Notification_Manager.dart';
+import 'package:motivation_quotes/src/controller/Notification/reminderController.dart';
 import 'package:motivation_quotes/src/controller/Quotes/quotesModel.dart';
 import 'package:motivation_quotes/src/frontend/_widgets/BottomNavigationBar.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Quote> quotes;
   Stream<bool> catStream;
   bool showFavHeart = false;
+  Timer timer;
 
   @override
   void initState() {
@@ -52,17 +55,21 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
+    timer?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     var db = Provider.of<SqliteDB>(context);
+    var nm = Provider.of<NotificationManager>(context);
+    var remBloc = Provider.of<ReminderBloc>(context);
+    timer = Timer.periodic(Duration(days: 1),
+        (timer) => remBloc.setUpNotificationReminer(db, nm, remBloc));
     return Scaffold(
       body: StreamBuilder<bool>(
           stream: catStream,
           builder: (context, snapshot) {
-            print(snapshot.data);
             if (!snapshot.hasData) {
               return Body(
                 db: db,
@@ -89,102 +96,100 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Quote> quotes;
     return StreamBuilder<Object>(
-      stream: null,
-      builder: (context, snapshot) {
-        return getMyCategory(quotes);
-      }
-    );
+        stream: null,
+        builder: (context, snapshot) {
+          return getMyCategory(quotes);
+        });
   }
 
   FutureBuilder<List<CatergoryModel>> getMyCategory(List<Quote> quotes) {
     return FutureBuilder(
-          future: db.getMyCat(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: CupertinoActivityIndicator(),
-              );
-            }
-            List<String> mycat = [];
-            for (var snap in snapshot.data) {
-              mycat.add(snap.catergoryName);
-            }
-            if (snapshot.data == null) {
-              return Container(
-                child: Center(
-                  child: Text(
-                    "No Quote Found!",
-                    style: startText,
-                  ),
-                ),
-              );
-            }
-            return getQuoteByCategory(mycat, quotes);
-          });
-  }
-
-  FutureBuilder<List<Quote>> getQuoteByCategory(List<String> mycat, List<Quote> quotes) {
-    return FutureBuilder(
-              future: db.getQuoteByCatergories(mycat),
-              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                    child: CupertinoActivityIndicator(),
-                  );
-                }
-                if (snapshot.data == null) {
-                  return Container(
-                    child: Center(
-                      child: Text(
-                        "No Quote Found!",
-                        style: startText,
-                      ),
-                    ),
-                  );
-                }
-                if (snapshot.hasData) {
-                  quotes = snapshot.data;
-                  print('length : ${quotes.length}');
-                  return PageView.builder(
-                      scrollDirection: Axis.vertical,
-                      itemCount: quotes.length,
-                      itemBuilder: (context, page) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(child: Container()),
-                              Text(
-                                quotes[page].body,
-                                style: quoteText,
-                                textAlign: TextAlign.center,
-                              ),
-                              SizedBox(
-                                height: 6,
-                              ),
-                              Text(
-                                '~${quotes[page].author}',
-                                style: authorText,
-                                textAlign: TextAlign.center,
-                              ),
-                              Expanded(child: Container()),
-                              BottomButtons(
-                                quote: quotes[page],
-                              ),
-                              SizedBox(
-                                height: 25,
-                              )
-                            ],
-                          ),
-                        );
-                      });
-                }
-                return Container();
-              },
+        future: db.getMyCat(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CupertinoActivityIndicator(),
             );
+          }
+          List<String> mycat = [];
+          for (var snap in snapshot.data) {
+            mycat.add(snap.catergoryName);
+          }
+          if (snapshot.data == null) {
+            return Container(
+              child: Center(
+                child: Text(
+                  "No Quote Found!",
+                  style: startText,
+                ),
+              ),
+            );
+          }
+          return getQuoteByCategory(mycat, quotes);
+        });
   }
 
+  FutureBuilder<List<Quote>> getQuoteByCategory(
+      List<String> mycat, List<Quote> quotes) {
+    return FutureBuilder(
+      future: db.getQuoteByCatergories(mycat),
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: CupertinoActivityIndicator(),
+          );
+        }
+        if (snapshot.data == null) {
+          return Container(
+            child: Center(
+              child: Text(
+                "No Quote Found!",
+                style: startText,
+              ),
+            ),
+          );
+        }
+        if (snapshot.hasData) {
+          quotes = snapshot.data;
+          return PageView.builder(
+              scrollDirection: Axis.vertical,
+              itemCount: quotes.length,
+              itemBuilder: (context, page) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(child: Container()),
+                      Text(
+                        quotes[page].body,
+                        style: quoteText,
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(
+                        height: 6,
+                      ),
+                      Text(
+                        '~${quotes[page].author}',
+                        style: authorText,
+                        textAlign: TextAlign.center,
+                      ),
+                      Expanded(child: Container()),
+                      BottomButtons(
+                        quote: quotes[page],
+                      ),
+                      SizedBox(
+                        height: 25,
+                      )
+                    ],
+                  ),
+                );
+              });
+        }
+        return Container();
+      },
+    );
+  }
 }
 
 class BottomButtons extends StatefulWidget {
@@ -209,7 +214,6 @@ class _BottomButtonsState extends State<BottomButtons> {
         shareIcon(widget.quote),
         Expanded(child: Container()),
         StreamBuilder<List<Quote>>(
-            // initialData: [Quote("", "", "", "")],
             stream: catBloc.quote,
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
@@ -223,11 +227,13 @@ class _BottomButtonsState extends State<BottomButtons> {
                   onTap: () {
                     if (!fav.contains(q)) {
                       fav.add(q);
+                      print('Adding : ${fav.length}');
                       catBloc.changeQuote(fav);
                       db.updateQuote(
                           Quote(q.id, q.body, q.catergory, q.author, isFav: 1));
                     } else {
                       fav.remove(q);
+                      print('Removing : ${fav.length}');
                       catBloc.changeQuote(fav);
                       db.updateQuote(
                           Quote(q.id, q.body, q.catergory, q.author, isFav: 0));
@@ -237,7 +243,7 @@ class _BottomButtonsState extends State<BottomButtons> {
                       ? Icon(
                           Icons.favorite,
                           color: Colors.red,
-                          size: 40,
+                          size: 35,
                         )
                       : SvgPicture.asset(
                           'assets/icons/heart.svg',
@@ -255,7 +261,7 @@ class _BottomButtonsState extends State<BottomButtons> {
     return GestureDetector(
       onTap: () {
         final RenderBox box = context.findRenderObject();
-        Share.share(quote.body,
+        Share.share("${quote.body} \n ~${quote.author}",
             subject: "MyQuote",
             sharePositionOrigin: box.localToGlobal(Offset(0, 50)) & box.size);
         // Share.shareFiles(['/assets/themes/1.jpeg'],

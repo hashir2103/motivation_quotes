@@ -33,10 +33,22 @@ class _StartScreen2State extends State<StartScreen2>
 
   initTimeSettings(SqliteDB db) {
     DateTime now = DateTime.now();
-    _startTime =
-        DateTime(now.year, now.month, now.day, now.hour + 1, now.minute);
-    _endTime =
-        DateTime(now.year, now.month, now.day, now.hour + 11, now.minute);
+    if (now.hour < 12) {
+      _startTime =
+          DateTime(now.year, now.month, now.day, now.hour + 1, now.minute);
+      _endTime =
+          DateTime(now.year, now.month, now.day, now.hour + 10, now.minute);
+    } else if (now.hour > 12 && now.hour < 18) {
+      _startTime =
+          DateTime(now.year, now.month, now.day, now.hour , now.minute+30);
+      _endTime =
+          DateTime(now.year, now.month, now.day, now.hour , now.minute+330);
+    } else {
+      _startTime =
+          DateTime(now.year, now.month, now.day, now.hour - 16, now.minute);
+      _endTime =
+          DateTime(now.year, now.month, now.day, now.hour -8, now.minute);
+    }
     var reminder = ReminderModel(
         key: 1,
         reminderCount: notificationCount,
@@ -273,8 +285,8 @@ class _StartScreen2State extends State<StartScreen2>
             } else {
               _startTime = DateTime(
                   now.year, now.month, now.day, time.hour, time.minute);
-              _endTime = DateTime(now.year, now.month, now.day,
-                  _endTime.hour, _endTime.minute);
+              _endTime = DateTime(
+                  now.year, now.month, now.day, _endTime.hour, _endTime.minute);
             }
           });
         }

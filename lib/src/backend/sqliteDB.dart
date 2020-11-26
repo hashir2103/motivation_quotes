@@ -93,7 +93,7 @@ class SqliteDB {
   }
 
   //reminder func
-  addReminder(ReminderModel reminder)async{
+  addReminder(ReminderModel reminder) async {
     var dbClient = await db;
     var result = await dbClient.insert(reminderTable, reminder.toMap());
     print('result :$result');
@@ -101,8 +101,8 @@ class SqliteDB {
 
   Future<ReminderModel> getReminder() async {
     var dbClient = await db;
-    var result = await dbClient
-        .query(reminderTable, where: "$key = ?",whereArgs: [1]);
+    var result =
+        await dbClient.query(reminderTable, where: "$key = ?", whereArgs: [1]);
     return ReminderModel.fromMap(result[0]);
   }
 
@@ -114,7 +114,8 @@ class SqliteDB {
       where: '$key = ?',
       whereArgs: [1],
     );
-    print("Updated reminder: ${rem.reminderCount}:${rem.startTime}:${rem.endTime},${rem.typeOfquote}");
+    print(
+        "Updated reminder: ${rem.reminderCount}:${rem.startTime}:${rem.endTime},${rem.typeOfquote}");
     print("New User: ${rem.isUsingAppFirstTime}");
   }
 
@@ -222,6 +223,19 @@ class SqliteDB {
       whereArgs: [cat.catergoryName],
     );
     print("Updated rows: ${cat.catergoryName}:${cat.showCatergory}");
+  }
+
+//get Fav
+  Future<List<Quote>> getFav() async {
+    List<Quote> _quotes = [];
+    var dbClient = await db;
+    var result = await dbClient.query(quoteTable,
+        where: '$isFav = ?', whereArgs: [1]);
+    result.forEach((element) {
+      var quote = Quote.fromMap(element);
+      _quotes.add(quote);
+    });
+    return _quotes;
   }
 
   deleteAllQuotes() async {

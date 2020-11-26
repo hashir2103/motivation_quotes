@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,35 +9,16 @@ import 'package:motivation_quotes/src/controller/Catergories/catergoryContoller.
 import 'package:motivation_quotes/src/controller/Notification/Notification_Manager.dart';
 import 'package:motivation_quotes/src/controller/Notification/reminderController.dart';
 import 'package:motivation_quotes/src/controller/Notification/reminderModel.dart';
+import 'package:motivation_quotes/src/controller/ProfileController.dart';
 import 'package:motivation_quotes/src/frontend/SplashScreens/SplashScreen.dart';
 import 'package:motivation_quotes/src/frontend/SplashScreens/start.dart';
 import 'package:provider/provider.dart';
 
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  Timer timer;
-  @override
-  void initState() {
-    super.initState();
-    // timer =
-    // Timer.periodic(Duration(seconds: 15), (timer) => print('===hello==='));
-  }
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
-  }
-
-  @override
+class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
-        DeviceOrientation.portraitUp,
-      ]);
+      DeviceOrientation.portraitUp,
+    ]);
     SqliteDB db = SqliteDB();
     return MultiProvider(
       providers: [
@@ -48,6 +28,7 @@ class _MyAppState extends State<MyApp> {
         Provider<SqliteDB>(create: (context) => SqliteDB()),
         Provider<CatergoryBloc>(create: (context) => CatergoryBloc()),
         Provider<ReminderBloc>(create: (context) => ReminderBloc()),
+        Provider<ProfileBloc>(create: (context) => ProfileBloc()),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -83,4 +64,3 @@ class Home extends StatelessWidget {
         });
   }
 }
-

@@ -45,7 +45,7 @@ TextStyle navText() {
 
 // Quotes text
 TextStyle get quoteText {
-  return GoogleFonts.sourceCodePro(
+  return GoogleFonts.josefinSans(
       textStyle: TextStyle(fontSize: 30),
       color: Colors.white,
       // fontWeight: FontWeight.w700
@@ -103,3 +103,24 @@ TextStyle get alertText {
       color: Colors.white,
       fontWeight: FontWeight.bold);
 }
+
+//profile
+TextStyle get favouriteText {
+  return GoogleFonts.alexBrush(
+      textStyle: TextStyle(fontSize: 25),
+      color: Colors.white,
+      );
+}
+TextStyle get favouriteQuoteText {
+  return GoogleFonts.sansita(
+      textStyle: TextStyle(fontSize: 25),
+      color: Colors.white,
+      );
+}
+TextStyle get favauthorText {
+  return GoogleFonts.sourceCodePro(
+      textStyle: TextStyle(fontSize: 18),
+      color: Colors.white,
+      fontWeight: FontWeight.w700);
+}
+

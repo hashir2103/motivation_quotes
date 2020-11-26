@@ -10,7 +10,7 @@ class MyAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverSafeArea(
-      minimum: EdgeInsets.only(top: 25),
+      minimum: EdgeInsets.only(top: 35),
       sliver: SliverAppBar(
         leading: IconButton(
           icon: Icon(
