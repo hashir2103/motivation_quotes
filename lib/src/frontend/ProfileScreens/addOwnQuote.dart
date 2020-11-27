@@ -8,12 +8,28 @@ import 'package:motivation_quotes/src/controller/collection/ownQuote.dart';
 import 'package:motivation_quotes/src/frontend/_widgets/customDailog.dart';
 import 'package:provider/provider.dart';
 
-// ignore: must_be_immutable
-class AddOwnQuote extends StatelessWidget {
-  TextEditingController _quote = TextEditingController();
-  TextEditingController _author = TextEditingController();
+class AddOwnQuote extends StatefulWidget {
+  final String quote;
+  final String author;
+  AddOwnQuote({this.quote = '', this.author = ''});
+  @override
+  _AddOwnQuoteState createState() => _AddOwnQuoteState();
+}
+
+class _AddOwnQuoteState extends State<AddOwnQuote> {
+  TextEditingController _quote;
+  TextEditingController _author;
+  @override
+  void dispose() {
+    _author.dispose();
+    _quote.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    _quote = TextEditingController(text: widget.quote);
+    _author = TextEditingController(text: widget.author);
     var _width = MediaQuery.of(context).size.width;
     var db = Provider.of<SqliteDB>(context);
     return Dialog(
@@ -38,7 +54,9 @@ class AddOwnQuote extends StatelessWidget {
                 Expanded(
                   child: Center(
                       child: Text(
-                    'Add a Quote',
+                    widget.quote == ''?
+                    'Add a Quote'
+                    :'Edit Quote',
                     style: GoogleFonts.yrsa(color: kIconColor, fontSize: 28),
                   )),
                 ),

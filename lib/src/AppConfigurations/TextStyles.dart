@@ -44,15 +44,26 @@ TextStyle navText() {
 }
 
 // Quotes text
-TextStyle get quoteText {
+TextStyle quoteText(int length) {
+  double size;
+  if (length >= 230) {
+    size = 24;
+  } else if (length >= 190 && length < 230) {
+    size = 26;
+  } else if (length >= 120 && length < 180) {
+    size = 28;
+  } else {
+    size = 30;
+  }
   return GoogleFonts.josefinSans(
-      textStyle: TextStyle(fontSize: 30),
+      textStyle: TextStyle(fontSize: size),
       color: Colors.white,
       wordSpacing: 1.2,
       letterSpacing: 1.5
       // fontWeight: FontWeight.w700
       );
 }
+
 TextStyle get authorText {
   return GoogleFonts.sourceCodePro(
       textStyle: TextStyle(fontSize: 20),
@@ -63,27 +74,28 @@ TextStyle get authorText {
 //AppBar text
 TextStyle get appBarTitle {
   return GoogleFonts.roboto(
-      textStyle: TextStyle(fontSize: 25),
-      color: Colors.white,
-      );
+    textStyle: TextStyle(fontSize: 25),
+    color: Colors.white,
+  );
 }
 
 // Category label
 TextStyle get catergoryLabel {
   return GoogleFonts.inconsolata(
-      textStyle: TextStyle(fontSize: 20),
-      color: Colors.white,
-      fontStyle: FontStyle.italic,
-      );
+    textStyle: TextStyle(fontSize: 20),
+    color: Colors.white,
+    fontStyle: FontStyle.italic,
+  );
 }
 
-//Reminder 
+//Reminder
 TextStyle get reminderText {
   return GoogleFonts.roboto(
-      textStyle: TextStyle(fontSize: 20),
-      color: Colors.white,
-    );
+    textStyle: TextStyle(fontSize: 20),
+    color: Colors.white,
+  );
 }
+
 TextStyle get reminderAlert {
   return GoogleFonts.sourceCodePro(
       textStyle: TextStyle(fontSize: 20),
@@ -98,7 +110,6 @@ TextStyle get reminderTextsmall {
       fontWeight: FontWeight.bold);
 }
 
-
 TextStyle get alertText {
   return GoogleFonts.lato(
       textStyle: TextStyle(fontSize: 16),
@@ -109,20 +120,31 @@ TextStyle get alertText {
 //profile
 TextStyle get favouriteText {
   return GoogleFonts.alexBrush(
-      textStyle: TextStyle(fontSize: 25),
-      color: Colors.white,
-      );
+    textStyle: TextStyle(fontSize: 25),
+    color: Colors.white,
+  );
 }
-TextStyle get favouriteQuoteText {
+
+TextStyle favouriteQuoteText(int length) {
+  double size;
+  if (length >= 230) {
+    size = 19;
+  } else if (length >= 190 && length < 230) {
+    size = 21;
+  } else if (length >= 120 && length < 190) {
+    size = 23;
+  } else {
+    size = 25;
+  }
   return GoogleFonts.sansita(
-      textStyle: TextStyle(fontSize: 25),
-      color: Colors.white,
-      );
+    textStyle: TextStyle(fontSize: size),
+    color: Colors.white,
+  );
 }
+
 TextStyle get favauthorText {
   return GoogleFonts.sourceCodePro(
       textStyle: TextStyle(fontSize: 18),
       color: Colors.white,
       fontWeight: FontWeight.w700);
 }
-

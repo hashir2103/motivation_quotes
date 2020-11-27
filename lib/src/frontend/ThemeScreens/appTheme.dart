@@ -9,15 +9,6 @@ class AppThemes extends StatefulWidget {
 }
 
 class _AppThemesState extends State<AppThemes> {
-  List<ImageProvider> images = [];
-  @override
-  void initState() {
-    for (var i in themesList) {
-      images.add(AssetImage('assets/themes/$i'));
-    }
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     var profBloc = Provider.of<ProfileBloc>(context);
@@ -44,8 +35,10 @@ class _AppThemesState extends State<AppThemes> {
                     elevation: 8,
                     child: Opacity(
                         opacity: 0.8,
-                        child:
-                            Image.asset('assets/themes/${themesList[index]}',fit: BoxFit.cover,))),
+                        child: Image(
+                          image:
+                              AssetImage('assets/themes/${themesList[index]}'),fit: BoxFit.cover,
+                        ))),
               );
             }, childCount: themesList.length),
           )

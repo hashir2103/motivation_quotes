@@ -185,7 +185,7 @@ class Body extends StatelessWidget {
                       Expanded(child: Container()),
                       Text(
                         quotes[page].body,
-                        style: quoteText,
+                        style: quoteText(quotes[page].body.length),
                         textAlign: TextAlign.center,
                       ),
                       SizedBox(

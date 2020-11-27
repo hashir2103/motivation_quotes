@@ -35,6 +35,7 @@ class SqliteDB {
   String catergoryShow = 'showCat';
 
   //Columns own quote
+  String id = 'id';
   String quote = 'quote';
   String author = 'author';
 
@@ -97,6 +98,7 @@ class SqliteDB {
 
     await db.execute('''
       CREATE TABLE $ownQuoteTable(
+        $id INTEGER PRIMARY KEY AUTOINCREMENT,
         $quote TEXT,
         $author TEXT
       )''');
@@ -158,11 +160,11 @@ class SqliteDB {
     );
   }
 
-  deleteOwnQuote(OwnQuote quote) async {
+  deleteOwnQuote(OwnQuote ownquote) async {
     var dbClient = await db;
-    await dbClient
-        .delete(ownQuoteTable, where: '$quote= ?', whereArgs: [quote.quote]);
-    print("All quote Deleted");
+    await dbClient.delete(ownQuoteTable,
+        where: '$quote = ?', whereArgs: [ownquote.quote]);
+        
   }
 
 //quote

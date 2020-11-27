@@ -121,6 +121,9 @@ class _SplashScreenState extends State<SplashScreen> {
 class Text1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // for (var i in themesList) {
+    //   precacheImage(AssetImage('assets/themes/$i'), context);
+    // }
     return AnimatedSplashScreen(
         backgroundColor: kPrimaryColor,
         animationDuration: Duration(milliseconds: 2500),

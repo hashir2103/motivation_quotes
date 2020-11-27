@@ -113,7 +113,7 @@ class _MyQuoteState extends State<MyQuote> {
                     children: [
                       Text(
                         quote.quote,
-                        style: favouriteQuoteText,
+                        style: favouriteQuoteText(quote.quote.length),
                         textAlign: TextAlign.center,
                       ),
                       SizedBox(
@@ -149,21 +149,24 @@ class _MyQuoteState extends State<MyQuote> {
                           },
                         ),
                         IconButton(
-                            icon: Icon(
-                              Icons.edit,
-                              color: Colors.blue,
-                              size: 35,
-                            ),
-                            onPressed: () {}),
+                          icon: Icon(
+                            Icons.edit,
+                            color: Colors.blue,
+                            size: 35,
+                          ),
+                          onPressed: () => showDialog(
+                              context: context,
+                              builder: (context) => AddOwnQuote(quote: quote.quote,author: quote.author,)),
+                        ),
                         IconButton(
                             icon: Icon(
                               Icons.delete,
                               size: 35,
                               color: Colors.redAccent,
                             ),
-                            onPressed: () {
+                            onPressed: () async{
+                              await db.deleteOwnQuote(quote);
                               profBloc.changeRemoveOwnQuote(true);
-                              db.deleteOwnQuote(quote);
                             }),
                       ],
                     )

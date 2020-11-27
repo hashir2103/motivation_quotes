@@ -111,7 +111,7 @@ class _MyFavState extends State<MyFav> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(quote.body ,
-                        style: favouriteQuoteText,
+                        style: favouriteQuoteText(quote.body.length),
                         textAlign: TextAlign.center,
                       ),
                       SizedBox(

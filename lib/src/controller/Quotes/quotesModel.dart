@@ -1141,8 +1141,6 @@ List<Quote> quotes = [
       'The moral of my story is the sun always comes out after the storm. Being optimistic and surrounding yourself with positive loving people is for me, living life on the sunny side of the street.',
       'Inspiration',
       '-Henry David Thoreau'),
-  Quote('99', 'When you have a dream, you’ve got to grab it and never let go.',
-      'Inspiration', 'Samuel Johnson'),
   Quote(
       '100',
       'Clouds come floating into my life, no longer to carry rain or usher storm, but to add color to my sunset sky.',
