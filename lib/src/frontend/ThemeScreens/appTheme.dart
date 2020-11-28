@@ -33,12 +33,10 @@ class _AppThemesState extends State<AppThemes> {
                 },
                 child: Card(
                     elevation: 8,
-                    child: Opacity(
-                        opacity: 0.8,
-                        child: Image(
-                          image:
-                              AssetImage('assets/themes/${themesList[index]}'),fit: BoxFit.cover,
-                        ))),
+                    child: Image(
+                      image: AssetImage('assets/themes/${themesList[index]}'),
+                      fit: BoxFit.cover,
+                    )),
               );
             }, childCount: themesList.length),
           )
@@ -66,5 +64,8 @@ List<String> themesList = [
   '15.jpg',
   '16.jpg',
   '17.jpg',
+  '18.jpg',
+  '19.jpg',
+  '20.jpg',
   '1.jpeg',
 ];
