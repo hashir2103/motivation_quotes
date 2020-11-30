@@ -19,6 +19,9 @@
           </intent-filter>
         </receiver>
         <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver"/>
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-1059342231343027~2820914933"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
