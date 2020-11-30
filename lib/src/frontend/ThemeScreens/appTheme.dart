@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:motivation_quotes/src/controller/collection/ProfileController.dart';
 import 'package:motivation_quotes/src/frontend/_widgets/SliverAppBar.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AppThemes extends StatefulWidget {
   @override
@@ -9,6 +10,7 @@ class AppThemes extends StatefulWidget {
 }
 
 class _AppThemesState extends State<AppThemes> {
+ Future<SharedPreferences> _pref = SharedPreferences.getInstance();
   @override
   Widget build(BuildContext context) {
     var profBloc = Provider.of<ProfileBloc>(context);
@@ -27,7 +29,9 @@ class _AppThemesState extends State<AppThemes> {
             ),
             delegate: SliverChildBuilderDelegate((context, index) {
               return GestureDetector(
-                onTap: () {
+                onTap: () async{
+                  var pref = await _pref;
+                  pref.setString('theme', themesList[index]);
                   profBloc.changeTheme(themesList[index]);
                   Navigator.pop(context);
                 },

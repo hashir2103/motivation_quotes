@@ -9,8 +9,10 @@ import 'package:motivation_quotes/src/backend/sqliteDB.dart';
 import 'package:motivation_quotes/src/controller/Catergories/catergoryContoller.dart';
 import 'package:motivation_quotes/src/controller/Catergories/catergoryModel.dart';
 import 'package:motivation_quotes/src/controller/Notification/reminderController.dart';
+import 'package:motivation_quotes/src/controller/collection/ProfileController.dart';
 import 'package:motivation_quotes/src/frontend/HomeScreens/HomeScreen.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -71,6 +73,22 @@ class _SplashScreenState extends State<SplashScreen> {
         catBloc.changePassion(true);
       }
     }
+  }
+
+  @override
+  void initState() {
+    var profBloc = Provider.of<ProfileBloc>(context, listen: false);
+    setTheme(profBloc);
+    super.initState();
+  }
+
+  setTheme(ProfileBloc profileBloc) async {
+    Future<SharedPreferences> _pref = SharedPreferences.getInstance();
+    _pref.then((pref) {
+      if (pref.getString('theme').isNotEmpty) {
+        profileBloc.changeTheme(pref.getString('theme'));
+      }
+    });
   }
 
   getReminderAndUpdateStream(SqliteDB db, ReminderBloc remBloc) async {
