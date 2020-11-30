@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:motivation_quotes/src/backend/adMobService.dart';
 import 'package:motivation_quotes/src/controller/collection/ProfileController.dart';
 import 'package:motivation_quotes/src/frontend/_widgets/SliverAppBar.dart';
 import 'package:provider/provider.dart';
@@ -10,8 +11,16 @@ class AppThemes extends StatefulWidget {
 
 class _AppThemesState extends State<AppThemes> {
   @override
+  void initState() {
+    var ads = Provider.of<AdMobServices>(context, listen: false);
+    ads.loadRewardAd();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var profBloc = Provider.of<ProfileBloc>(context);
+    var ads = Provider.of<AdMobServices>(context);
     return Scaffold(
         body: Padding(
       padding: EdgeInsets.symmetric(horizontal: 10),
@@ -28,6 +37,7 @@ class _AppThemesState extends State<AppThemes> {
             delegate: SliverChildBuilderDelegate((context, index) {
               return GestureDetector(
                 onTap: () {
+                  ads.showRewardedAds();
                   profBloc.changeTheme(themesList[index]);
                   Navigator.pop(context);
                 },
