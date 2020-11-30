@@ -71,6 +71,8 @@ class _SplashScreenState extends State<SplashScreen> {
       }
       if (cat.catergoryName == kPassion && cat.showCatergory == 1) {
         catBloc.changePassion(true);
+      } else {
+        catBloc.changeGeneral(true);
       }
     }
   }
@@ -85,8 +87,10 @@ class _SplashScreenState extends State<SplashScreen> {
   setTheme(ProfileBloc profileBloc) async {
     Future<SharedPreferences> _pref = SharedPreferences.getInstance();
     _pref.then((pref) {
-      if (pref.getString('theme').isNotEmpty) {
-        profileBloc.changeTheme(pref.getString('theme'));
+      if (pref != null) {
+        if (pref.getString('theme').isNotEmpty) {
+          profileBloc.changeTheme(pref.getString('theme'));
+        }
       }
     });
   }

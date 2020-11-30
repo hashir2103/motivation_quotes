@@ -50,20 +50,6 @@ class Catergory extends StatelessWidget {
                 //           child: catergory('General', FontAwesomeIcons.random,
                 //               snapshot.data));
                 //     }),
-                // StreamBuilder<bool>(
-                //     stream: categoryBloc.favourite,
-                //     builder: (context, snapshot) {
-                //       if (!snapshot.hasData) {
-                //         return Container();
-                //       }
-                //       return MaterialButton(
-                //           padding: EdgeInsets.all(0),
-                //           onPressed: () {
-                //             categoryBloc.changeFavourite(!snapshot.data);
-                //           },
-                //           child: catergory('Favorite', FontAwesomeIcons.heart,
-                //               snapshot.data));
-                //     }),
                 StreamBuilder<bool>(
                     stream: categoryBloc.hardtime,
                     builder: (context, snapshot) {

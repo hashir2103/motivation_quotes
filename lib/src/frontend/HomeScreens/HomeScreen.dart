@@ -14,7 +14,6 @@ import 'package:motivation_quotes/src/controller/Quotes/quotesModel.dart';
 import 'package:motivation_quotes/src/controller/collection/ProfileController.dart';
 import 'package:motivation_quotes/src/frontend/_widgets/BottomNavigationBar.dart';
 import 'package:provider/provider.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:share/share.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -29,32 +28,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Timer timer;
 
   @override
-  void initState() {
-    super.initState();
-    var catBloc = Provider.of<CatergoryBloc>(context, listen: false);
-    catStream = MergeStream<bool>([
-      catBloc.general,
-      catBloc.favourite,
-      catBloc.hardtime,
-      catBloc.inspiration,
-      catBloc.love,
-      catBloc.selfEsteem,
-      catBloc.productivity,
-      catBloc.saying,
-      catBloc.monday,
-      catBloc.future,
-      catBloc.life,
-      catBloc.workout,
-      catBloc.birthday,
-      catBloc.night,
-      catBloc.travel,
-      catBloc.sport,
-      catBloc.past,
-      catBloc.passion,
-    ]);
-  }
-
-  @override
   void dispose() {
     timer?.cancel();
     super.dispose();
@@ -66,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
     var nm = Provider.of<NotificationManager>(context);
     var remBloc = Provider.of<ReminderBloc>(context);
     var profBloc = Provider.of<ProfileBloc>(context);
+    var catBloc = Provider.of<CatergoryBloc>(context);
     timer = Timer.periodic(Duration(days: 1),
         (timer) => remBloc.setUpNotificationReminer(db, nm, remBloc));
     return Scaffold(
@@ -88,12 +62,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               }),
           StreamBuilder<bool>(
-              stream: catStream,
+              stream: catBloc.catergoryStreamCombine,
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
-                  return Body(
-                    db: db,
-                  );
+                  return Center(child: CupertinoActivityIndicator());
+                }
+                if (!snapshot.data) {
+                  return Center(
+                      child: Text(
+                    "General",
+                    style: quoteText(10),
+                  ));
                 }
                 return Body(
                   db: db,

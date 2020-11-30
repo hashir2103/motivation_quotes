@@ -27,6 +27,32 @@ class CatergoryBloc {
 
   final _addToFav = BehaviorSubject<bool>.seeded(false);
 
+  Stream<bool> get catergoryStreamCombine => CombineLatestStream([
+        hardtime,
+        inspiration,
+        love,
+        selfEsteem,
+        productivity,
+        saying,
+        monday,
+        future,
+        life,
+        workout,
+        birthday,
+        night,
+        travel,
+        sport,
+        past,
+        passion
+      ], (a) {
+        if (a.contains(true)) {
+          return true;
+        } else {
+          changeGeneral(true);
+          return false;
+        }
+      });
+
   // getter
   Stream<bool> get general => _general.stream;
   Stream<bool> get favourite => _favourite.stream;
