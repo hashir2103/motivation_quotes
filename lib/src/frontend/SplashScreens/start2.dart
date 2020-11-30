@@ -45,9 +45,9 @@ class _StartScreen2State extends State<StartScreen2>
           DateTime(now.year, now.month, now.day, now.hour , now.minute+330);
     } else {
       _startTime =
-          DateTime(now.year, now.month, now.day, now.hour - 16, now.minute);
+          DateTime(now.year, now.month, now.day+1, now.hour + 1 , now.minute);
       _endTime =
-          DateTime(now.year, now.month, now.day, now.hour -8, now.minute);
+          DateTime(now.year, now.month, now.day+1, now.hour + 10, now.minute);
     }
     var reminder = ReminderModel(
         key: 1,

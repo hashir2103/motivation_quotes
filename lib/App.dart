@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:motivation_quotes/src/AppConfigurations/Routes.dart';
 import 'package:motivation_quotes/src/AppConfigurations/Theme.dart';
+import 'package:motivation_quotes/src/backend/adMobService.dart';
 import 'package:motivation_quotes/src/backend/sqliteDB.dart';
 import 'package:motivation_quotes/src/controller/Catergories/catergoryContoller.dart';
 import 'package:motivation_quotes/src/controller/Notification/Notification_Manager.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         Provider<CatergoryBloc>(create: (context) => CatergoryBloc()),
         Provider<ReminderBloc>(create: (context) => ReminderBloc()),
         Provider<ProfileBloc>(create: (context) => ProfileBloc()),
+        Provider<AdMobServices>(create: (context)=> AdMobServices()),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
