@@ -107,7 +107,7 @@ class _ReminderState extends State<Reminder> {
       // margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
       padding: EdgeInsets.symmetric(horizontal: 15, vertical: 12),
       decoration: BoxDecoration(
-        color: Color(0xff434c51),
+        color: Color(0xff434c51).withOpacity(0.4),
         borderRadius: BorderRadius.circular(15),
       ),
       child: Row(
@@ -237,7 +237,7 @@ class _ReminderState extends State<Reminder> {
                   style: reminderTextsmall,
                 )),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30), color: kIconColor),
+                    borderRadius: BorderRadius.circular(30), color: Colors.grey.withOpacity(0.4)),
               );
             }),
       );

@@ -10,6 +10,11 @@ const kPrimaryGradientColor = LinearGradient(
   end: Alignment.bottomRight,
   colors: [Color(0xFFFFA53E), Color(0xFFFF7643)],
 );
+const kGoldGradientColor = LinearGradient(
+  begin: Alignment.topLeft,
+  end: Alignment.bottomRight,
+  colors: [Color(0xFFFFDF00), Color(0xFFCFB53B),Color(0xFFC5B358)],
+);
 
 const kStartGradientColor = LinearGradient(
   begin: Alignment.bottomRight,

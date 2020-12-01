@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:motivation_quotes/src/AppConfigurations/Colors.dart';
 import 'package:motivation_quotes/src/AppConfigurations/TextStyles.dart';
 import 'package:motivation_quotes/src/frontend/ProfileScreens/addOwnQuote.dart';
-import 'package:motivation_quotes/src/frontend/ProfileScreens/favourite.dart';
-import 'package:motivation_quotes/src/frontend/ProfileScreens/myQuote.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -22,31 +22,103 @@ class _ProfileState extends State<Profile> {
         body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 14.0),
             child: ListView(
-              reverse: true,
+              // reverse: true,
               children: [
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.04,
-                ),
-                Column(
-                  children: [marker()],
-                ),
                 SizedBox(
-                  height: 4,
+                  height: 10,
                 ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.17,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [fav(), own()],
-                  ),
+                topButton(),
+                SizedBox(
+                  height: 25,
                 ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.04,
+                listHeading('Collection'),
+                tile(
+                  FontAwesomeIcons.shareAltSquare,
+                  Colors.green,
+                  'Share Motivation',
+                  () {},
                 ),
-                isFav? MyFav() : MyQuote()
+                tile(FontAwesomeIcons.heart, Colors.red, 'Favourite quotes',
+                    () {},show: false),
+                tile(FontAwesomeIcons.pencilAlt, Colors.yellow, 'Add your Own',
+                    () {},show: false),
+                tile(FontAwesomeIcons.filter, Colors.yellow,
+                    'Content Preference', () {},show: false),
+                listHeading('Help'),
+                tile(
+                  FontAwesomeIcons.thumbsUp,
+                  Colors.yellowAccent,
+                  'Review this app',
+                  () {},
+                ),
+                tile(FontAwesomeIcons.comments, Colors.blue, 'Give us Feedback',
+                    () {}),
+                listHeading('Follow Us'),
+                tile(
+                  FontAwesomeIcons.instagram,
+                  Color(0xfffb3940),
+                  'Instagram',
+                  () {},
+                ),
+                tile(
+                    FontAwesomeIcons.facebookF, Colors.blue, 'facebook', () {}),
+                tile(FontAwesomeIcons.pinterestP, Colors.red, 'Pinterest',
+                    () {}),
               ],
             )));
+  }
+
+  topButton() {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          gradient: kGoldGradientColor),
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(7.0),
+          child: Text(
+            "Go Premium",
+            style:
+                GoogleFonts.ubuntu(fontSize: 22, fontWeight: FontWeight.w700),
+          ),
+        ),
+      ),
+    );
+  }
+
+  listHeading(String heading) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 2, vertical: 4),
+      padding: EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+      child: Text(
+        heading,
+        style: reminderTextsmall,
+      ),
+    );
+  }
+
+  ListTile tile(IconData icon, Color color, String label, Function onTap,
+      {show = true}) {
+    return ListTile(
+      contentPadding: EdgeInsets.symmetric(vertical: 1),
+      onTap: onTap,
+      leading: Icon(
+        icon,
+        color: color,
+      ),
+      title: Text(
+        label,
+        style: profileListTileText,
+      ),
+      trailing: show
+          ? SizedBox(
+              width: 0,
+            )
+          : Icon(
+              Icons.arrow_forward_ios,
+              color: kIconColor,
+            ),
+    );
   }
 
   AppBar myAppbar(BuildContext context) {
@@ -57,7 +129,7 @@ class _ProfileState extends State<Profile> {
       title: Padding(
         padding: const EdgeInsets.only(top: 17.0),
         child: Text(
-          'Collection',
+          'Profile',
           style: appBarTitle,
         ),
       ),
@@ -77,7 +149,6 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  
   static const _alignments = [
     Alignment.topLeft,
     Alignment.topRight,

@@ -4,32 +4,52 @@ import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:motivation_quotes/src/AppConfigurations/size.dart';
 
-
 List<TextStyle> themetextStyles = [
-  GoogleFonts.notoSans(color:Colors.white,wordSpacing: 1.2,letterSpacing: 1.5 ,fontSize: 25),
-  GoogleFonts.oswald(color:Colors.white,wordSpacing: 1.2,letterSpacing: 1.5 ,fontSize: 25),
-  GoogleFonts.sansita(color:Colors.white,wordSpacing: 1.2,letterSpacing: 1.5 ,fontSize: 25),
-  GoogleFonts.firaSans(color:Colors.white,wordSpacing: 1.2,letterSpacing: 1.5 ,fontSize: 25),
-  GoogleFonts.lobster(color:Colors.white,wordSpacing: 1.2,letterSpacing: 1.5 ,fontSize: 25),
-  GoogleFonts.inconsolata(color:Colors.white,wordSpacing: 1.2,letterSpacing: 1.5 ,fontSize: 25),
-  GoogleFonts.architectsDaughter(color:Colors.white,wordSpacing: 1.2,letterSpacing: 1.5 ,fontSize: 25),
-  GoogleFonts.teko(color:Colors.white,wordSpacing: 1.2,letterSpacing: 1.5 ,fontSize: 25),
-  GoogleFonts.cabin(color:Colors.white,wordSpacing: 1.2,letterSpacing: 1.5 ,fontSize: 25),
-  GoogleFonts.indieFlower(color:Colors.white,wordSpacing: 1.2,letterSpacing: 1.5 ,fontSize: 25),
-  GoogleFonts.overpass(color:Colors.white,wordSpacing: 1.2,letterSpacing: 1.5 ,fontSize: 25),
-  GoogleFonts.notoSans(color:Colors.white,wordSpacing: 1.2,letterSpacing: 1.5 ,fontSize: 25),
-  GoogleFonts.oswald(color:Colors.white,wordSpacing: 1.2,letterSpacing: 1.5 ,fontSize: 25),
-  GoogleFonts.sansita(color:Colors.white,wordSpacing: 1.2,letterSpacing: 1.5 ,fontSize: 25),
-  GoogleFonts.firaSans(color:Colors.white,wordSpacing: 1.2,letterSpacing: 1.5 ,fontSize: 25),
-  GoogleFonts.lobster(color:Colors.white,wordSpacing: 1.2,letterSpacing: 1.5 ,fontSize: 25),
-  GoogleFonts.inconsolata(color:Colors.white,wordSpacing: 1.2,letterSpacing: 1.5 ,fontSize: 25),
-  GoogleFonts.architectsDaughter(color:Colors.white,wordSpacing: 1.2,letterSpacing: 1.5 ,fontSize: 25),
-  GoogleFonts.teko(color:Colors.white,wordSpacing: 1.2,letterSpacing: 1.5 ,fontSize: 25),
-  GoogleFonts.cabin(color:Colors.white,wordSpacing: 1.2,letterSpacing: 1.5 ,fontSize: 25),
-  GoogleFonts.indieFlower(color:Colors.white,wordSpacing: 1.2,letterSpacing: 1.5 ,fontSize: 25),
-  GoogleFonts.overpass(color:Colors.white,wordSpacing: 1.2,letterSpacing: 1.5 ,fontSize: 25),
+  GoogleFonts.notoSans(
+      color: Colors.white, wordSpacing: 1.2, letterSpacing: 1.5, fontSize: 25),
+  GoogleFonts.oswald(
+      color: Colors.white, wordSpacing: 1.2, letterSpacing: 1.5, fontSize: 25),
+  GoogleFonts.sansita(
+      color: Colors.white, wordSpacing: 1.2, letterSpacing: 1.5, fontSize: 25),
+  GoogleFonts.firaSans(
+      color: Colors.white, wordSpacing: 1.2, letterSpacing: 1.5, fontSize: 25),
+  GoogleFonts.lobster(
+      color: Colors.white, wordSpacing: 1.2, letterSpacing: 1.5, fontSize: 25),
+  GoogleFonts.inconsolata(
+      color: Colors.white, wordSpacing: 1.2, letterSpacing: 1.5, fontSize: 25),
+  GoogleFonts.architectsDaughter(
+      color: Colors.white, wordSpacing: 1.2, letterSpacing: 1.5, fontSize: 25),
+  GoogleFonts.teko(
+      color: Colors.white, wordSpacing: 1.2, letterSpacing: 1.5, fontSize: 25),
+  GoogleFonts.cabin(
+      color: Colors.white, wordSpacing: 1.2, letterSpacing: 1.5, fontSize: 25),
+  GoogleFonts.indieFlower(
+      color: Colors.white, wordSpacing: 1.2, letterSpacing: 1.5, fontSize: 25),
+  GoogleFonts.overpass(
+      color: Colors.white, wordSpacing: 1.2, letterSpacing: 1.5, fontSize: 25),
+  GoogleFonts.notoSans(
+      color: Colors.white, wordSpacing: 1.2, letterSpacing: 1.5, fontSize: 25),
+  GoogleFonts.oswald(
+      color: Colors.white, wordSpacing: 1.2, letterSpacing: 1.5, fontSize: 25),
+  GoogleFonts.sansita(
+      color: Colors.white, wordSpacing: 1.2, letterSpacing: 1.5, fontSize: 25),
+  GoogleFonts.firaSans(
+      color: Colors.white, wordSpacing: 1.2, letterSpacing: 1.5, fontSize: 25),
+  GoogleFonts.lobster(
+      color: Colors.white, wordSpacing: 1.2, letterSpacing: 1.5, fontSize: 25),
+  GoogleFonts.inconsolata(
+      color: Colors.white, wordSpacing: 1.2, letterSpacing: 1.5, fontSize: 25),
+  GoogleFonts.architectsDaughter(
+      color: Colors.white, wordSpacing: 1.2, letterSpacing: 1.5, fontSize: 25),
+  GoogleFonts.teko(
+      color: Colors.white, wordSpacing: 1.2, letterSpacing: 1.5, fontSize: 25),
+  GoogleFonts.cabin(
+      color: Colors.white, wordSpacing: 1.2, letterSpacing: 1.5, fontSize: 25),
+  GoogleFonts.indieFlower(
+      color: Colors.white, wordSpacing: 1.2, letterSpacing: 1.5, fontSize: 25),
+  GoogleFonts.overpass(
+      color: Colors.white, wordSpacing: 1.2, letterSpacing: 1.5, fontSize: 25),
 ];
-
 
 //splash screen texxt
 TextStyle splashText() {
@@ -174,4 +194,8 @@ TextStyle get favauthorText {
       textStyle: TextStyle(fontSize: 18),
       color: Colors.white,
       fontWeight: FontWeight.w700);
+}
+
+TextStyle get profileListTileText {
+  return GoogleFonts.robotoCondensed(color: Colors.white, fontSize: 16);
 }
