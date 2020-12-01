@@ -95,15 +95,17 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var profBloc = Provider.of<ProfileBloc>(context);
     List<Quote> quotes;
     return StreamBuilder<Object>(
         stream: null,
         builder: (context, snapshot) {
-          return getMyCategory(quotes);
+          return getMyCategory(quotes, profBloc);
         });
   }
 
-  FutureBuilder<List<CatergoryModel>> getMyCategory(List<Quote> quotes) {
+  FutureBuilder<List<CatergoryModel>> getMyCategory(
+      List<Quote> quotes, ProfileBloc profileBloc) {
     return FutureBuilder(
         future: db.getMyCat(),
         builder: (context, snapshot) {
@@ -126,12 +128,12 @@ class Body extends StatelessWidget {
               ),
             );
           }
-          return getQuoteByCategory(mycat, quotes);
+          return getQuoteByCategory(mycat, quotes, profileBloc);
         });
   }
 
   FutureBuilder<List<Quote>> getQuoteByCategory(
-      List<String> mycat, List<Quote> quotes) {
+      List<String> mycat, List<Quote> quotes, ProfileBloc profileBloc) {
     return FutureBuilder(
       future: db.getQuoteByCatergories(mycat),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -162,11 +164,18 @@ class Body extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Expanded(child: Container()),
-                      Text(
-                        quotes[page].body,
-                        style: quoteText(quotes[page].body.length),
-                        textAlign: TextAlign.center,
-                      ),
+                      StreamBuilder<TextStyle>(
+                          stream: profileBloc.appthemeText,
+                          builder: (context, snapshot) {
+                            return Text(
+                              quotes[page].body,
+                              style:
+                                  (!snapshot.hasData && snapshot.data == null)
+                                      ? quoteText(quotes[page].body.length)
+                                      : snapshot.data,
+                              textAlign: TextAlign.center,
+                            );
+                          }),
                       SizedBox(
                         height: 6,
                       ),

@@ -90,6 +90,8 @@ class _SplashScreenState extends State<SplashScreen> {
       if (pref != null) {
         if (pref.getString('theme').isNotEmpty) {
           profileBloc.changeTheme(pref.getString('theme'));
+          profileBloc
+              .changeThemeText(themetextStyles[pref.getInt('themeTextStyle')]);
         }
       }
     });
