@@ -55,7 +55,7 @@ class _AddOwnQuoteState extends State<AddOwnQuote> {
                   child: Center(
                       child: Text(
                     widget.quote == ''?
-                    'Add a Quote'
+                    'Add New Quote'
                     :'Edit Quote',
                     style: GoogleFonts.yrsa(color: kIconColor, fontSize: 28),
                   )),

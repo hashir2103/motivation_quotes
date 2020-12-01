@@ -1,9 +1,9 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:motivation_quotes/src/AppConfigurations/Routes.dart';
 import 'package:motivation_quotes/src/AppConfigurations/Theme.dart';
+import 'package:motivation_quotes/src/AppConfigurations/constants.dart';
 import 'package:motivation_quotes/src/backend/sqliteDB.dart';
 import 'package:motivation_quotes/src/controller/Catergories/catergoryContoller.dart';
 import 'package:motivation_quotes/src/controller/Notification/Notification_Manager.dart';
@@ -13,9 +13,11 @@ import 'package:motivation_quotes/src/controller/collection/ProfileController.da
 import 'package:motivation_quotes/src/frontend/SplashScreens/SplashScreen.dart';
 import 'package:motivation_quotes/src/frontend/SplashScreens/start.dart';
 import 'package:provider/provider.dart';
+import 'package:wiredash/wiredash.dart';
 
 class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
+    final _navigatorKey = GlobalKey<NavigatorState>();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
@@ -30,11 +32,17 @@ class MyApp extends StatelessWidget {
         Provider<ReminderBloc>(create: (context) => ReminderBloc()),
         Provider<ProfileBloc>(create: (context) => ProfileBloc()),
       ],
-      child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          onGenerateRoute: Routes.cupertinoPageRoute,
-          theme: theme(),
-          home: Home(db: db)),
+      child: Wiredash(
+        projectId: projectId,
+        navigatorKey: _navigatorKey,
+        secret: secretKey,
+        child: MaterialApp(
+            navigatorKey: _navigatorKey,
+            debugShowCheckedModeBanner: false,
+            onGenerateRoute: Routes.cupertinoPageRoute,
+            theme: theme(),
+            home: Home(db: db)),
+      ),
     );
   }
 }

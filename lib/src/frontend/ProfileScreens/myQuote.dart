@@ -21,33 +21,72 @@ class _MyQuoteState extends State<MyQuote> {
   Widget build(BuildContext context) {
     var db = Provider.of<SqliteDB>(context);
     var profBloc = Provider.of<ProfileBloc>(context);
-    return StreamBuilder<bool>(
-        stream: profBloc.removeOwnQuote,
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return Container();
-          }
-          return FutureBuilder(
-              future: db.getOwnQuote(),
-              builder: (context, snapshot) {
-                if (snapshot.data == null || snapshot.data.isEmpty) {
-                  return myCarosuel(true, [1]);
-                }
-                var list = [
-                  for (var i = 0; i < snapshot.data.length; i += 1) i
-                ];
-                return myCarosuel(false, list, quotes: snapshot.data);
-              });
-        });
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Container(),
+            flex: 1,
+          ),
+          Expanded(
+            flex: 7,
+            child: StreamBuilder<bool>(
+                stream: profBloc.removeOwnQuote,
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Container();
+                  }
+                  return FutureBuilder(
+                      future: db.getOwnQuote(),
+                      builder: (context, snapshot) {
+                        if (snapshot.data == null || snapshot.data.isEmpty) {
+                          return myCarosuel(true, [1]);
+                        }
+                        var list = [
+                          for (var i = 0; i < snapshot.data.length; i += 1) i
+                        ];
+                        return myCarosuel(false, list, quotes: snapshot.data);
+                      });
+                }),
+          ),
+          Expanded(
+            flex: 1,
+            child: Column(
+              children: [
+                GestureDetector(
+                  onTap: () => showDialog(
+                      context: context, builder: (context) => AddOwnQuote()),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      border: Border.all(color: kIconColor, width: 4),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(2.5),
+                      child: SvgPicture.asset(
+                        'assets/icons/PlusIcon.svg',
+                        color: kIconColor,
+                        height: 30,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget myCarosuel(bool isempty, List<int> items, {List<OwnQuote> quotes}) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.6,
       child: CarouselSlider(
         options: CarouselOptions(
           enableInfiniteScroll: false,
-          height: MediaQuery.of(context).size.height * 0.5,
+          height: MediaQuery.of(context).size.height * 0.7,
           scrollDirection: Axis.horizontal,
           enlargeCenterPage: true,
         ),
@@ -156,7 +195,10 @@ class _MyQuoteState extends State<MyQuote> {
                           ),
                           onPressed: () => showDialog(
                               context: context,
-                              builder: (context) => AddOwnQuote(quote: quote.quote,author: quote.author,)),
+                              builder: (context) => AddOwnQuote(
+                                    quote: quote.quote,
+                                    author: quote.author,
+                                  )),
                         ),
                         IconButton(
                             icon: Icon(
@@ -164,7 +206,7 @@ class _MyQuoteState extends State<MyQuote> {
                               size: 35,
                               color: Colors.redAccent,
                             ),
-                            onPressed: () async{
+                            onPressed: () async {
                               await db.deleteOwnQuote(quote);
                               profBloc.changeRemoveOwnQuote(true);
                             }),

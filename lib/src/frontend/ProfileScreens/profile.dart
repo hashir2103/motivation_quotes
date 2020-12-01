@@ -4,7 +4,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:motivation_quotes/src/AppConfigurations/Colors.dart';
 import 'package:motivation_quotes/src/AppConfigurations/TextStyles.dart';
-import 'package:motivation_quotes/src/frontend/ProfileScreens/addOwnQuote.dart';
+import 'package:motivation_quotes/src/AppConfigurations/constants.dart';
+import 'package:motivation_quotes/src/controller/Quotes/quotesModel.dart';
+import 'package:motivation_quotes/src/controller/collection/ProfileController.dart';
+import 'package:provider/provider.dart';
+import 'package:share/share.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:wiredash/wiredash.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -13,10 +19,10 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   bool isFav = true;
-  int index = 0;
-
   @override
   Widget build(BuildContext context) {
+    var profBloc = Provider.of<ProfileBloc>(context);
+    Quote quote = profBloc.getQuote;
     return Scaffold(
         appBar: myAppbar(context),
         body: Padding(
@@ -36,14 +42,20 @@ class _ProfileState extends State<Profile> {
                   FontAwesomeIcons.shareAltSquare,
                   Colors.green,
                   'Share Motivation',
-                  () {},
+                  () {
+                    final RenderBox box = context.findRenderObject();
+                    Share.share("${quote.body} \n ~${quote.author}",
+                        subject: "MyQuote",
+                        sharePositionOrigin:
+                            box.localToGlobal(Offset(0, 50)) & box.size);
+                  },
                 ),
                 tile(FontAwesomeIcons.heart, Colors.red, 'Favourite quotes',
-                    () {},show: false),
+                    () => Navigator.pushNamed(context, kMyFav),
+                    show: false),
                 tile(FontAwesomeIcons.pencilAlt, Colors.yellow, 'Add your Own',
-                    () {},show: false),
-                tile(FontAwesomeIcons.filter, Colors.yellow,
-                    'Content Preference', () {},show: false),
+                    () => Navigator.pushNamed(context, kOwnQuote),
+                    show: false),
                 listHeading('Help'),
                 tile(
                   FontAwesomeIcons.thumbsUp,
@@ -52,18 +64,15 @@ class _ProfileState extends State<Profile> {
                   () {},
                 ),
                 tile(FontAwesomeIcons.comments, Colors.blue, 'Give us Feedback',
-                    () {}),
+                    () => Wiredash.of(context).show()),
                 listHeading('Follow Us'),
-                tile(
-                  FontAwesomeIcons.instagram,
-                  Color(0xfffb3940),
-                  'Instagram',
-                  () {},
+                tile(FontAwesomeIcons.instagram, Color(0xfffb3940), 'Instagram',
+                    () => _launchUniversalLinkIos('https://instagram.com')
                 ),
                 tile(
-                    FontAwesomeIcons.facebookF, Colors.blue, 'facebook', () {}),
+                    FontAwesomeIcons.facebookF, Colors.blue, 'facebook', () => _launchUniversalLinkIos('https://www.facebook.com/')),
                 tile(FontAwesomeIcons.pinterestP, Colors.red, 'Pinterest',
-                    () {}),
+                    () => _launchUniversalLinkIos('https://pinterest.com')),
               ],
             )));
   }
@@ -97,7 +106,7 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  ListTile tile(IconData icon, Color color, String label, Function onTap,
+  ListTile tile(IconData icon, Color color, String label, onTap,
       {show = true}) {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(vertical: 1),
@@ -149,101 +158,19 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  static const _alignments = [
-    Alignment.topLeft,
-    Alignment.topRight,
-  ];
-
-  AlignmentGeometry _alignment() => _alignments[index];
-
-  Widget marker() {
-    var width = MediaQuery.of(context).size.width;
-    return AnimatedAlign(
-      duration: Duration(milliseconds: 250),
-      alignment: _alignment(),
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 22),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20), color: Colors.grey),
-        height: 1,
-        width: width / 2.6,
-      ),
-    );
-  }
-
-  Widget fav() {
-    var width = MediaQuery.of(context).size.width;
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          isFav = true;
-          index = 0;
-        });
-      },
-      child: AnimatedContainer(
-          duration: Duration(milliseconds: 250),
-          height: isFav ? 120 : 100,
-          width: isFav ? width / 2.4 : width / 2.5,
-          decoration: BoxDecoration(
-            color: Colors.grey.withOpacity(0.2),
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.favorite_border_sharp,
-                color: Colors.red,
-                size: 40,
-              ),
-              Text(
-                'Favourite',
-                style: favouriteText,
-              )
-            ],
-          )),
-    );
-  }
-
-  Widget own() {
-    var width = MediaQuery.of(context).size.width;
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          isFav = false;
-          index = 1;
-        });
-      },
-      onDoubleTap: () {
-        showDialog(
-          context: context,
-          builder: (context) => AddOwnQuote(),
+  Future<void> _launchUniversalLinkIos(String url) async {
+    if (await canLaunch(url)) {
+      final bool nativeAppLaunchSucceeded = await launch(
+        url,
+        forceSafariVC: false,
+        universalLinksOnly: true,
+      );
+      if (!nativeAppLaunchSucceeded) {
+        await launch(
+          url,
+          forceSafariVC: true,
         );
-      },
-      child: AnimatedContainer(
-          duration: Duration(milliseconds: 250),
-          height: isFav ? 100 : 120,
-          width: isFav ? width / 2.5 : width / 2.4,
-          decoration: BoxDecoration(
-            color: Colors.grey.withOpacity(0.2),
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.note_add_sharp,
-                color: Colors.green,
-                size: 40,
-              ),
-              Text(
-                'My Quotes',
-                style: favouriteText,
-              )
-            ],
-          )),
-    );
+      }
+    }
   }
 }

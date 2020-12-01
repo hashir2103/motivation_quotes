@@ -21,33 +21,36 @@ class _MyFavState extends State<MyFav> {
   Widget build(BuildContext context) {
     var db = Provider.of<SqliteDB>(context);
     var profBloc = Provider.of<ProfileBloc>(context);
-    return StreamBuilder<bool>(
-        stream: profBloc.removeFav,
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return Container();
-          }
-          return FutureBuilder(
-              future: db.getFav(),
-              builder: (context, snapshot) {
-                if (snapshot.data == null || snapshot.data.isEmpty) {
-                  return myCarosuel(true, [1]);
-                }
-                var list = [
-                  for (var i = 0; i < snapshot.data.length; i += 1) i
-                ];
-                return myCarosuel(false, list, quotes: snapshot.data);
-              });
-        });
+    return Scaffold(
+          body: Center(
+            child: StreamBuilder<bool>(
+            stream: profBloc.removeFav,
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return Container();
+              }
+              return FutureBuilder(
+                  future: db.getFav(),
+                  builder: (context, snapshot) {
+                    if (snapshot.data == null || snapshot.data.isEmpty) {
+                      return myCarosuel(true, [1]);
+                    }
+                    var list = [
+                      for (var i = 0; i < snapshot.data.length; i += 1) i
+                    ];
+                    return myCarosuel(false, list, quotes: snapshot.data);
+                  });
+            }),
+          ),
+    );
   }
 
   Widget myCarosuel(bool isempty, List<int> items, {List<Quote> quotes}) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.6,
       child: CarouselSlider(
         options: CarouselOptions(
           enableInfiniteScroll: false,
-          height: MediaQuery.of(context).size.height * 0.5,
+          height: MediaQuery.of(context).size.height * 0.7,
           scrollDirection: Axis.horizontal,
           enlargeCenterPage: true,
         ),

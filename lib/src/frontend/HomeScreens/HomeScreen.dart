@@ -158,6 +158,7 @@ class Body extends StatelessWidget {
               scrollDirection: Axis.vertical,
               itemCount: quotes.length,
               itemBuilder: (context, page) {
+                profileBloc.changeQuote(quotes[page]);
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Column(

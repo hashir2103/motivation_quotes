@@ -26,7 +26,6 @@ dependencies:
   animated_splash_screen: ^1.0.1+2
   carousel_slider: ^2.3.1
   cupertino_icons: ^1.0.0
-  esys_flutter_share: ^1.0.2
   flutter_local_notifications: ^3.0.1+4
   flutter_native_timezone: ^1.0.4
   flutter_svg: ^0.19.1
@@ -40,6 +39,8 @@ dependencies:
   share: ^0.6.5+4
   shared_preferences: ^0.5.12+4
   sqflite: ^1.3.2+1
+  url_launcher: ^5.7.10
+  wiredash: ^0.3.0
 
 dev_dependencies:
   flutter_test:

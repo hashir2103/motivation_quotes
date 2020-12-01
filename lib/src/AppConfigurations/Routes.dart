@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:motivation_quotes/src/AppConfigurations/constants.dart';
 import 'package:motivation_quotes/src/frontend/HomeScreens/HomeScreen.dart';
+import 'package:motivation_quotes/src/frontend/ProfileScreens/favourite.dart';
+import 'package:motivation_quotes/src/frontend/ProfileScreens/myQuote.dart';
 import 'package:motivation_quotes/src/frontend/ProfileScreens/profile.dart';
 import 'package:motivation_quotes/src/frontend/ReminderScreens/reminder.dart';
 import 'package:motivation_quotes/src/frontend/SplashScreens/SplashScreen.dart';
@@ -50,6 +52,12 @@ abstract class Routes {
       
       case kThemeScreen:
         return CupertinoPageRoute(builder: (context) => AppThemes());
+      
+      case kMyFav:
+        return CupertinoPageRoute(builder: (context) => MyFav());
+      
+      case kOwnQuote:
+        return CupertinoPageRoute(builder: (context) => MyQuote());
 
       // case kShowNotification:
       //   return CupertinoPageRoute(builder: (context) => ShowNotification());
