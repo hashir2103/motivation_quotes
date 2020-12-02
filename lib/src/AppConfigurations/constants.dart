@@ -9,6 +9,7 @@ const String kThemeScreen = '/theme';
 const String kMyFav = '/myfav';
 const String kOwnQuote = '/ownQuote';
 const String kShowNotification = '/showNotifications';
+
 //wiredash
 const String projectId = 'motivationquoteapp-o41w6io';
 const String secretKey = 'n7tv6lfxcwi00zrtufbdieb9hsbwdztzd4yyzn56dxbjmmwp';
