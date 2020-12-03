@@ -7,6 +7,7 @@ import 'package:motivation_quotes/src/AppConfigurations/TextStyles.dart';
 import 'package:motivation_quotes/src/AppConfigurations/constants.dart';
 import 'package:motivation_quotes/src/controller/Quotes/quotesModel.dart';
 import 'package:motivation_quotes/src/controller/collection/ProfileController.dart';
+import 'package:motivation_quotes/src/frontend/_widgets/Policydailog.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -67,12 +68,33 @@ class _ProfileState extends State<Profile> {
                     () => Wiredash.of(context).show()),
                 listHeading('Follow Us'),
                 tile(FontAwesomeIcons.instagram, Color(0xfffb3940), 'Instagram',
-                    () => _launchUniversalLinkIos('https://instagram.com')
-                ),
-                tile(
-                    FontAwesomeIcons.facebookF, Colors.blue, 'facebook', () => _launchUniversalLinkIos('https://www.facebook.com/')),
+                    () => _launchUniversalLinkIos('https://instagram.com')),
+                tile(FontAwesomeIcons.facebookF, Colors.blue, 'facebook',
+                    () => _launchUniversalLinkIos('https://www.facebook.com/')),
                 tile(FontAwesomeIcons.pinterestP, Colors.red, 'Pinterest',
                     () => _launchUniversalLinkIos('https://pinterest.com')),
+                listHeading('Other'),
+                ListTile(
+                  title: Text('Privacy Policy', style: profileListTileText),
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return PolicyDailog(mdfilename: 'privacy_policy.md');
+                        });
+                  },
+                ),
+                ListTile(
+                  title:
+                      Text('Terms and Conditions', style: profileListTileText),
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return PolicyDailog(mdfilename: 'terms_conditions.md');
+                        });
+                  },    
+                ),
               ],
             )));
   }
