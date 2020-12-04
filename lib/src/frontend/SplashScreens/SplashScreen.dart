@@ -145,15 +145,15 @@ class _SplashScreenState extends State<SplashScreen> {
 class Text1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // for (var i in themesList) {
-    //   precacheImage(AssetImage('assets/themes/$i'), context);
-    // }
+    
+    
+    
     return AnimatedSplashScreen(
         backgroundColor: kPrimaryColor,
         animationDuration: Duration(milliseconds: 2500),
         duration: 2500,
         splashTransition: SplashTransition.slideTransition,
-        // backgroundColor: kcolor3,
+        
         curve: Curves.easeInOutBack,
         nextScreen: Text2(),
         splash: Text(
@@ -188,7 +188,7 @@ class Text3 extends StatelessWidget {
         animationDuration: Duration(milliseconds: 2500),
         duration: 2500,
         splashTransition: SplashTransition.slideTransition,
-        // backgroundColor: kcolor2,
+        
         curve: Curves.easeInOutBack,
         nextScreen: HomeScreen(),
         splash: Text(

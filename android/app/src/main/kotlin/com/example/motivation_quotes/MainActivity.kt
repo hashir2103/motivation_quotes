@@ -1,4 +1,4 @@
-package com.example.motivation_quotes
+package com.test.quotes
 
 import io.flutter.embedding.android.FlutterActivity
 

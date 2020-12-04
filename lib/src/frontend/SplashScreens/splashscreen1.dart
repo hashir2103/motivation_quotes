@@ -47,7 +47,7 @@ class _SplashScreen1State extends State<SplashScreen1>
                       clipper: DrawCLip(animationController.value),
                       child: Container(
                         height: size.height * 0.5,
-                        // width: size.width * 0.5,
+                        
                         decoration: BoxDecoration(
                             gradient: LinearGradient(
                                 begin: Alignment.bottomLeft,
@@ -81,23 +81,23 @@ class _SplashScreen1State extends State<SplashScreen1>
   }
 }
 
-// class TestClip extends CustomClipper<Path> {
-//   @override
-//   Path getClip(Size size) {
-//     Path path = Path();
-//     // path.moveTo(size.width / 2, 0);
-//     path.lineTo(0, size.height*0.8); // kahan sa curve bana shuro hoga wo coordinates frist coordinate
-//     path.quadraticBezierTo(size.width*0.4, size.height/2, size.width ,size.height*0.8); //(2nd ,3rd coordinates)
-//     path.lineTo(size.width, 0); // kahan pa cure end hoga wo coordinates 4th coordinate
-//     path.close();
-//     return path;
-//   }
 
-//   @override
-//   bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
-//     return false;
-//   }import 'dart:math' as math;import 'dart:math' as math;
-// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class DrawCLip extends CustomClipper<Path> {
   double move = 0;
@@ -105,14 +105,13 @@ class DrawCLip extends CustomClipper<Path> {
   DrawCLip(this.move);
   @override
   Path getClip(Size size) {
-    print(move);
     Path path = Path();
     var x = size.width;
     var y = size.height;
     var centerY = y + math.cos(move * slice);
     var centerX = x / 2 + x * math.sin(move * slice);
     path.lineTo(0, y * 0.6);
-    path.quadraticBezierTo(centerX, centerY, x, y * 0.8); // curve shape
+    path.quadraticBezierTo(centerX, centerY, x, y * 0.8); 
     path.lineTo(x, 0);
     path.close();
     return path;

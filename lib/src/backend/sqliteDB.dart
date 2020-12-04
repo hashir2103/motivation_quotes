@@ -51,7 +51,6 @@ class SqliteDB {
     if (_db != null) {
       return _db;
     }
-    print("db was null, now awaiting it to initalize");
     _db = await init();
     return _db;
   }
@@ -67,8 +66,7 @@ class SqliteDB {
     var dir = await getDatabasesPath();
     String path = join(dir, dbName);
     await deleteDatabase(path);
-    print('Database Deleted');
-  }
+    }
 
   _onCreate(Database db, int version) async {
     await db.execute('''
@@ -103,14 +101,13 @@ class SqliteDB {
         $author TEXT
       )''');
 
-    print("TABLE created");
-  }
+      }
 
   //reminder func
   addReminder(ReminderModel reminder) async {
     var dbClient = await db;
-    var result = await dbClient.insert(reminderTable, reminder.toMap());
-    print('result :$result');
+    await dbClient.insert(reminderTable, reminder.toMap());
+
   }
 
   Future<ReminderModel> getReminder() async {
@@ -128,10 +125,7 @@ class SqliteDB {
       where: '$key = ?',
       whereArgs: [1],
     );
-    print(
-        "Updated reminder: ${rem.reminderCount}:${rem.startTime}:${rem.endTime},${rem.typeOfquote}");
-    print("New User: ${rem.isUsingAppFirstTime}");
-  }
+    }
 
 //ownQuote
   addOwnQuote(OwnQuote quote) async {
@@ -170,14 +164,14 @@ class SqliteDB {
 //quote
   addQuote(Quote quote) async {
     var dbClient = await db;
-    var result = await dbClient.insert(quoteTable, quote.toMap());
-    print('result :$result');
+    await dbClient.insert(quoteTable, quote.toMap());
+    
   }
 
   addCat(CatergoryModel cat) async {
     var dbClient = await db;
-    var result = await dbClient.insert(myCategories, cat.toMap());
-    print('result :$result');
+    await dbClient.insert(myCategories, cat.toMap());
+   
   }
 
   Future<List<Quote>> getQuoteByCatergory(String catergory) async {
@@ -270,8 +264,7 @@ class SqliteDB {
       where: '$catergoryName = ?',
       whereArgs: [cat.catergoryName],
     );
-    print("Updated rows: ${cat.catergoryName}:${cat.showCatergory}");
-  }
+    }
 
 //get Fav
   Future<List<Quote>> getFav() async {
@@ -289,14 +282,12 @@ class SqliteDB {
   deleteAllQuotes() async {
     var dbClient = await db;
     await dbClient.delete(quoteTable);
-    print("All quote Deleted");
   }
 
   deleteAllCat() async {
     var dbClient = await db;
     await dbClient.delete(myCategories);
-    print("All quote Deleted");
-  }
+    }
 
   close() async {
     var dbClient = await db;

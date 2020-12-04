@@ -64,7 +64,7 @@ class BottomNavigation extends StatelessWidget {
       },
       child: Container(
           width: MediaQuery.of(context).size.width/4,
-          // padding: EdgeInsets.symmetric(horizontal: 20),
+          
           child: Center(
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,

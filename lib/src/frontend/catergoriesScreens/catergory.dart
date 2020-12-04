@@ -5,24 +5,42 @@ import 'package:motivation_quotes/src/AppConfigurations/Colors.dart';
 import 'package:motivation_quotes/src/AppConfigurations/TextStyles.dart';
 import 'package:motivation_quotes/src/AppConfigurations/constants.dart';
 import 'package:motivation_quotes/src/AppConfigurations/size.dart';
+import 'package:motivation_quotes/src/backend/adMobService.dart';
 import 'package:motivation_quotes/src/backend/sqliteDB.dart';
 import 'package:motivation_quotes/src/controller/Catergories/catergoryContoller.dart';
 import 'package:motivation_quotes/src/controller/Catergories/catergoryModel.dart';
 import 'package:motivation_quotes/src/frontend/_widgets/SliverAppBar.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_admob/firebase_admob.dart';
 
-class Catergory extends StatelessWidget {
+class Catergory extends StatefulWidget {
+  @override
+  _CatergoryState createState() => _CatergoryState();
+}
+
+class _CatergoryState extends State<Catergory> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var categoryBloc = Provider.of<CatergoryBloc>(context);
     var db = Provider.of<SqliteDB>(context);
+    var ads = Provider.of<AdMobServices>(context);
+    InterstitialAd newAd = ads.getNewCategoryInterstitial();
+    newAd.load();
     SizeConfig.init(context);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: CustomScrollView(
           slivers: [
-            MyAppBar(title: 'Categories',onPressed: ()=>Navigator.pop(context),),
+            MyAppBar(
+              title: 'Categories',
+              onPressed: () => Navigator.pop(context),
+            ),
             SliverList(
               delegate: SliverChildListDelegate([
                 SizedBox(height: 30),
@@ -36,20 +54,6 @@ class Catergory extends StatelessWidget {
               mainAxisSpacing: 20,
               crossAxisSpacing: 20,
               children: [
-                // StreamBuilder<bool>(
-                //     stream: categoryBloc.general,
-                //     builder: (context, snapshot) {
-                //       if (!snapshot.hasData) {
-                //         return Container();
-                //       }
-                //       return MaterialButton(
-                //           padding: EdgeInsets.all(0),
-                //           onPressed: () {
-                //             categoryBloc.changeGeneral(!snapshot.data);
-                //           },
-                //           child: catergory('General', FontAwesomeIcons.random,
-                //               snapshot.data));
-                //     }),
                 StreamBuilder<bool>(
                     stream: categoryBloc.hardtime,
                     builder: (context, snapshot) {
@@ -58,7 +62,8 @@ class Catergory extends StatelessWidget {
                       }
                       return MaterialButton(
                           padding: EdgeInsets.all(0),
-                          onPressed: () {
+                          onPressed: () async {
+                            newAd.show();
                             categoryBloc.changeHardtimes(!snapshot.data);
                             db.updateCat(CatergoryModel(
                                 catergoryName: kHardtimes,
@@ -77,6 +82,11 @@ class Catergory extends StatelessWidget {
                       return MaterialButton(
                           padding: EdgeInsets.all(0),
                           onPressed: () {
+                            newAd.show(
+                              anchorType: AnchorType.bottom,
+                              anchorOffset: 0.0,
+                              horizontalCenterOffset: 0.0,
+                            );
                             categoryBloc.changeInspiration(!snapshot.data);
                             db.updateCat(CatergoryModel(
                                 catergoryName: kInspiration,
@@ -113,6 +123,11 @@ class Catergory extends StatelessWidget {
                       return MaterialButton(
                           padding: EdgeInsets.all(0),
                           onPressed: () {
+                            newAd.show(
+                              anchorType: AnchorType.bottom,
+                              anchorOffset: 0.0,
+                              horizontalCenterOffset: 0.0,
+                            );
                             categoryBloc.changeSelfEsteem(!snapshot.data);
                             db.updateCat(CatergoryModel(
                                 catergoryName: kSelfesteem,
@@ -149,6 +164,11 @@ class Catergory extends StatelessWidget {
                       return MaterialButton(
                           padding: EdgeInsets.all(0),
                           onPressed: () {
+                            newAd.show(
+                              anchorType: AnchorType.bottom,
+                              anchorOffset: 0.0,
+                              horizontalCenterOffset: 0.0,
+                            );
                             categoryBloc.changeSaying(!snapshot.data);
                             db.updateCat(CatergoryModel(
                                 catergoryName: kSaying,
@@ -185,6 +205,11 @@ class Catergory extends StatelessWidget {
                       return MaterialButton(
                           padding: EdgeInsets.all(0),
                           onPressed: () {
+                            newAd.show(
+                              anchorType: AnchorType.bottom,
+                              anchorOffset: 0.0,
+                              horizontalCenterOffset: 0.0,
+                            );
                             categoryBloc.changeFuture(!snapshot.data);
                             db.updateCat(CatergoryModel(
                                 catergoryName: kFuture,
@@ -221,6 +246,11 @@ class Catergory extends StatelessWidget {
                       return MaterialButton(
                           padding: EdgeInsets.all(0),
                           onPressed: () {
+                            newAd.show(
+                              anchorType: AnchorType.bottom,
+                              anchorOffset: 0.0,
+                              horizontalCenterOffset: 0.0,
+                            );
                             categoryBloc.changeWorkout(!snapshot.data);
                             db.updateCat(CatergoryModel(
                                 catergoryName: kFitness,
@@ -257,6 +287,11 @@ class Catergory extends StatelessWidget {
                       return MaterialButton(
                           padding: EdgeInsets.all(0),
                           onPressed: () {
+                            newAd.show(
+                              anchorType: AnchorType.bottom,
+                              anchorOffset: 0.0,
+                              horizontalCenterOffset: 0.0,
+                            );
                             categoryBloc.changeNight(!snapshot.data);
                             db.updateCat(CatergoryModel(
                                 catergoryName: kNight,
@@ -293,6 +328,11 @@ class Catergory extends StatelessWidget {
                       return MaterialButton(
                           padding: EdgeInsets.all(0),
                           onPressed: () {
+                            newAd.show(
+                              anchorType: AnchorType.bottom,
+                              anchorOffset: 0.0,
+                              horizontalCenterOffset: 0.0,
+                            );
                             categoryBloc.changeSport(!snapshot.data);
                             db.updateCat(CatergoryModel(
                                 catergoryName: kSport,
@@ -329,6 +369,11 @@ class Catergory extends StatelessWidget {
                       return MaterialButton(
                           padding: EdgeInsets.all(0),
                           onPressed: () {
+                            newAd.show(
+                              anchorType: AnchorType.bottom,
+                              anchorOffset: 0.0,
+                              horizontalCenterOffset: 0.0,
+                            );
                             categoryBloc.changePassion(!snapshot.data);
                             db.updateCat(CatergoryModel(
                                 catergoryName: kPassion,

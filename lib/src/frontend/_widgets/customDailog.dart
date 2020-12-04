@@ -37,7 +37,7 @@ class _CustomDailogBoxState extends State<CustomDailogBox> {
               left: 0,
               child: Container(
                   width: _width,
-                  // margin: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                  
                   padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
                   decoration: BoxDecoration(
                     color: Color(0xff434c51),

@@ -10,7 +10,7 @@ abstract class Buttons {
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 5),
         decoration: BoxDecoration(
-          // padding: EdgeInsets.symmetric(vertical: 10),
+          
           borderRadius: BorderRadius.circular(20),
           color: Color(0xFFe9f0f6).withOpacity(0.7),
         ),

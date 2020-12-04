@@ -9,7 +9,7 @@ import 'package:motivation_quotes/src/controller/Quotes/quotesModel.dart';
 import 'package:motivation_quotes/src/frontend/SplashScreens/start3.dart';
 import 'package:motivation_quotes/src/frontend/_widgets/startButton.dart';
 import 'package:provider/provider.dart';
-// import 'package:provider/provider.dart';
+
 
 class StartScreen extends StatefulWidget {
   @override
@@ -22,8 +22,8 @@ class _StartScreenState extends State<StartScreen> {
   void initState() {
     var db = Provider.of<SqliteDB>(context, listen: false);
     db.init();
-    // db.deleteAllQuotes();
-    // db.deleteDB();
+    
+    
     super.initState();
   }
 
@@ -31,8 +31,7 @@ class _StartScreenState extends State<StartScreen> {
     for (var quote in quotes) {
       db.addQuote(quote);
     }
-    print('Quote added!..');
-  }
+    }
 
   
 

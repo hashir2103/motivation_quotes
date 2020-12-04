@@ -12,23 +12,6 @@ import 'package:motivation_quotes/src/frontend/ThemeScreens/appTheme.dart';
 import 'package:motivation_quotes/src/frontend/catergoriesScreens/catergory.dart';
 
 abstract class Routes {
-  static MaterialPageRoute materialPageRoute(RouteSettings settings) {
-    switch (settings.name) {
-      case '/':
-        return MaterialPageRoute(builder: (context) => SplashScreen1());
-
-      default:
-        // var routeArray = settings.name.split('/');
-        // if (settings.name.contains('/editproduct/')) {
-        //   print(routeArray[2]);
-        //   return MaterialPageRoute(
-        //       builder: (context) => EditProduct(
-        //             productId: routeArray[2],
-        //           ));
-        // }
-        return MaterialPageRoute(builder: (context) => SplashScreen1());
-    }
-  }
 
   static CupertinoPageRoute cupertinoPageRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -59,17 +42,17 @@ abstract class Routes {
       case kOwnQuote:
         return CupertinoPageRoute(builder: (context) => MyQuote());
 
-      // case kShowNotification:
-      //   return CupertinoPageRoute(builder: (context) => ShowNotification());
+      
+      
 
       default:
-        // var routeArray = settings.name.split('/');
-        // if (settings.name.contains('/editproduct/')) {
-        //   return CupertinoPageRoute(
-        //       builder: (context) => EditProduct(
-        //             productId: routeArray[2],
-        //           ));
-        // }
+        
+        
+        
+        
+        
+        
+        
         return CupertinoPageRoute(builder: (context) => HomeScreen());
     }
   }

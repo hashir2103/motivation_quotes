@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:motivation_quotes/src/AppConfigurations/Colors.dart';
 import 'package:motivation_quotes/src/AppConfigurations/TextStyles.dart';
+import 'package:motivation_quotes/src/AppConfigurations/constants.dart';
 import 'package:motivation_quotes/src/backend/sqliteDB.dart';
 import 'package:motivation_quotes/src/controller/Catergories/catergoryContoller.dart';
 import 'package:motivation_quotes/src/controller/Catergories/catergoryModel.dart';
@@ -68,11 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   return Center(child: CupertinoActivityIndicator());
                 }
                 if (!snapshot.data) {
-                  return Center(
-                      child: Text(
-                    "General",
-                    style: quoteText(10),
-                  ));
+                  return General();
                 }
                 return Body(
                   db: db,
@@ -81,6 +78,80 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       bottomNavigationBar: BottomNavigation(),
+    );
+  }
+}
+
+class General extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var db = Provider.of<SqliteDB>(context);
+    var profileBloc = Provider.of<ProfileBloc>(context);
+    return FutureBuilder(
+      future: db.getQuoteByCatergories([kLove, kProductivity]),
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: CupertinoActivityIndicator(),
+          );
+        }
+        if (snapshot.data == null) {
+          return Container(
+            child: Center(
+              child: Text(
+                "No Quote Found!",
+                style: startText,
+              ),
+            ),
+          );
+        }
+        if (snapshot.hasData) {
+          quotes = snapshot.data;
+          return PageView.builder(
+              scrollDirection: Axis.vertical,
+              itemCount: quotes.length,
+              itemBuilder: (context, page) {
+                profileBloc.changeQuote(quotes[page]);
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(child: Container()),
+                      StreamBuilder<TextStyle>(
+                          stream: profileBloc.appthemeText,
+                          builder: (context, snapshot) {
+                            return Text(
+                              quotes[page].body,
+                              style:
+                                  (!snapshot.hasData && snapshot.data == null)
+                                      ? quoteText(quotes[page].body.length)
+                                      : snapshot.data,
+                              textAlign: TextAlign.center,
+                            );
+                          }),
+                      SizedBox(
+                        height: 6,
+                      ),
+                      Text(
+                        '~${quotes[page].author}',
+                        style: authorText,
+                        textAlign: TextAlign.center,
+                      ),
+                      Expanded(child: Container()),
+                      BottomButtons(
+                        quote: quotes[page],
+                      ),
+                      SizedBox(
+                        height: 25,
+                      )
+                    ],
+                  ),
+                );
+              });
+        }
+        return Container();
+      },
     );
   }
 }
@@ -212,7 +283,7 @@ class BottomButtons extends StatefulWidget {
 }
 
 class _BottomButtonsState extends State<BottomButtons> {
-  // List<Quote> fav = [];
+  
   @override
   Widget build(BuildContext context) {
     var db = Provider.of<SqliteDB>(context);
@@ -238,13 +309,11 @@ class _BottomButtonsState extends State<BottomButtons> {
                   onTap: () {
                     if (!fav.contains(q)) {
                       fav.add(q);
-                      print('Adding : ${fav.length}');
                       catBloc.changeQuote(fav);
                       db.updateQuote(
                           Quote(q.id, q.body, q.catergory, q.author, isFav: 1));
                     } else {
                       fav.remove(q);
-                      print('Removing : ${fav.length}');
                       catBloc.changeQuote(fav);
                       db.updateQuote(
                           Quote(q.id, q.body, q.catergory, q.author, isFav: 0));
@@ -275,9 +344,9 @@ class _BottomButtonsState extends State<BottomButtons> {
         Share.share("${quote.body} \n ~${quote.author}",
             subject: "MyQuote",
             sharePositionOrigin: box.localToGlobal(Offset(0, 50)) & box.size);
-        // Share.shareFiles(['/assets/themes/1.jpeg'],
-        // text: quote.body,sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size
-        // );
+        
+        
+        
       },
       child: Container(
         child: SvgPicture.asset(

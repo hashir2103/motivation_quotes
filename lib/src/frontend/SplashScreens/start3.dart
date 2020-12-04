@@ -185,7 +185,6 @@ class _StartScreen3State extends State<StartScreen3>
                           for (var cat in cats) {
                             db.addCat(cat);
                           }
-                          print('catergory added!..');
                           Navigator.pushReplacement(
                               context,
                               CupertinoPageRoute(
@@ -260,7 +259,7 @@ class DrawBottomClip extends CustomClipper<Path> {
     path.quadraticBezierTo(x / 2.5, y / 2, x, 0);
     path.lineTo(x, y);
     path.lineTo(0, y);
-    // path.lineTo(x, 0);
+    
     path.close();
     return path;
   }

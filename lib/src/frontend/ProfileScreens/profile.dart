@@ -29,12 +29,11 @@ class _ProfileState extends State<Profile> {
         body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 14.0),
             child: ListView(
-              // reverse: true,
               children: [
                 SizedBox(
                   height: 10,
                 ),
-                topButton(),
+                // topButton(),
                 SizedBox(
                   height: 25,
                 ),
@@ -58,12 +57,12 @@ class _ProfileState extends State<Profile> {
                     () => Navigator.pushNamed(context, kOwnQuote),
                     show: false),
                 listHeading('Help'),
-                tile(
-                  FontAwesomeIcons.thumbsUp,
-                  Colors.yellowAccent,
-                  'Review this app',
-                  () {},
-                ),
+                // tile(
+                //   FontAwesomeIcons.thumbsUp,
+                //   Colors.yellowAccent,
+                //   'Review this app',
+                //   () {},
+                // ),
                 tile(FontAwesomeIcons.comments, Colors.blue, 'Give us Feedback',
                     () => Wiredash.of(context).show()),
                 listHeading('Follow Us'),

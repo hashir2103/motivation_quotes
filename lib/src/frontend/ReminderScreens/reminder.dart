@@ -104,7 +104,6 @@ class _ReminderState extends State<Reminder> {
 
   Widget data({String label, Widget child}) {
     return Container(
-      // margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
       padding: EdgeInsets.symmetric(horizontal: 15, vertical: 12),
       decoration: BoxDecoration(
         color: Color(0xff434c51).withOpacity(0.4),
@@ -170,9 +169,9 @@ class _ReminderState extends State<Reminder> {
         });
     if (time != null) {
       if (endTime == true) {
-        DateTime pickedTime =
+        DateTime endTimePicked =
             DateTime(now.year, now.month, now.day, time.hour, time.minute);
-        if (pickedTime.isBefore(_startTime)) {
+        if (endTimePicked.isBefore(_startTime)) {
           showDialog(
               context: context,
               builder: (context) {
@@ -186,10 +185,10 @@ class _ReminderState extends State<Reminder> {
           remBloc.changeEndTime(_endTime.toString());
         }
       } else {
-        DateTime pickedTime =
+        DateTime startTimePicked =
             DateTime(now.year, now.month, now.day, time.hour, time.minute);
 
-        if (pickedTime.isAfter(_endTime)) {
+        if (startTimePicked.isAfter(_endTime)) {
           showDialog(
               context: context,
               builder: (context) {
@@ -198,7 +197,7 @@ class _ReminderState extends State<Reminder> {
                 );
               });
         } else {
-          if (pickedTime.isBefore(DateTime.now())) {
+          if (startTimePicked.isBefore(DateTime.now())) {
             _startTime = DateTime(
                 now.year, now.month, now.day + 1, time.hour, time.minute);
             _endTime = DateTime(now.year, now.month, now.day + 1, _endTime.hour,
@@ -233,7 +232,6 @@ class _ReminderState extends State<Reminder> {
                 child: Center(
                     child: Text(
                   "${snapshot.data.split(' ')[1].substring(0, 5)}",
-                  // "${snapshot.data.substring(0, 19)}",
                   style: reminderTextsmall,
                 )),
                 decoration: BoxDecoration(
@@ -260,8 +258,6 @@ class _ReminderState extends State<Reminder> {
         children: [
           Container(
             padding: EdgeInsets.symmetric(horizontal: 15, vertical: 12),
-            // decoration: BoxDecoration(
-            //     borderRadius: BorderRadius.circular(30), color: kIconColor),
             child: StreamBuilder<String>(
                 stream: remBloc.typeOfquote,
                 builder: (context, snapshot) {
