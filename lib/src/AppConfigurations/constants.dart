@@ -11,8 +11,8 @@ const String kOwnQuote = '/ownQuote';
 const String kShowNotification = '/showNotifications';
 
 //wiredash
-const String projectId = 'motivationquoteapp-o41w6io';
-const String secretKey = 'n7tv6lfxcwi00zrtufbdieb9hsbwdztzd4yyzn56dxbjmmwp';
+const String projectId = 'motivation-dose-it2xotr';
+const String secretKey = '0on13p3yvx9gxj7l95fc0yf57awatgk7hpsv6j6qr5cf05o1';
 
 // reminder notification
 const String kStartTimeHour = 'startTimeHour';

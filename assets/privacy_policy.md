@@ -58,4 +58,3 @@ This policy is effective as of 2020-12-03
 **Contact Us**
 
 If you have any questions or suggestions about my Privacy Policy, do not hesitate to contact me at motivationdoseneeded@gmail.com.
-hashirtahir2103

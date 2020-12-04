@@ -30,4 +30,4 @@ These terms and conditions are effective as of 2020-12-03
 
 **Contact Us**
 
-If you have any questions or suggestions about my Terms and Conditions, do not hesitate to contact me at hashirtahir2103@gmail.com.
+If you have any questions or suggestions about my Terms and Conditions, do not hesitate to contact me at motivationdoseneeded@gmail.com.

@@ -37,9 +37,10 @@ class AdMobServices {
   }
 
   MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
-    // keywords: <String>['flutterio', 'beautiful apps'],
-    // contentUrl: 'https://flutter.io',
-    childDirected: false,
+    keywords: <String>['flutterio', 'beautiful apps'],
+    contentUrl: 'https://flutter.io',
+    childDirected: true,
+    nonPersonalizedAds: true,
     testDevices: <String>[], // Android emulators are considered test devices
   );
 
