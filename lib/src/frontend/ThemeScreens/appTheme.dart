@@ -41,7 +41,7 @@ class _AppThemesState extends State<AppThemes> {
             delegate: SliverChildBuilderDelegate((context, index) {
               return GestureDetector(
                 onTap: () async {
-                  ads.showRewardedAds();
+                  await ads.showRewardedAds();
                   var pref = await _pref;
                   pref.setString('theme', themesList[index]);
                   pref.setInt('themeTextStyle', index);

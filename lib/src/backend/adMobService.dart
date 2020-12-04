@@ -5,33 +5,33 @@ class AdMobServices {
   var rewardedVideoAd = RewardedVideoAd.instance;
   static String getAdMobAppID() {
     if (Platform.isIOS) {
-      return "ca-app-pub-1059342231343027~5276715551"; //realid
+      return "ca-app-pub-1113274221551554~6621548826"; //realid
       // return "ca-app-pub-3940256099942544/motivation_quotes5662855259";
     } else if (Platform.isAndroid) {
-      // return "ca-app-pub-1059342231343027~2820914933"; //realid
-      return "ca-app-pub-3940256099942544/3419835294";
+      return "ca-app-pub-1113274221551554~1843014802"; //realid
+      // return "ca-app-pub-3940256099942544/3419835294";
     }
     return null;
   }
 
   String getInterstitialAdID() {
     if (Platform.isIOS) {
-      return "ca-app-pub-1059342231343027/8488190492"; //realId
+      return "ca-app-pub-1113274221551554/4288041282"; //realId
       // return "ca-app-pub-3940256099942544/4411468910"; //testId
     } else if (Platform.isAndroid) {
-      // return "ca-app-pub-1059342231343027/9992843854"; //realId
-      return "ca-app-pub-3940256099942544/1033173712"; //testId
+      return "ca-app-pub-1113274221551554/4599032471"; //realId
+      // return "ca-app-pub-3940256099942544/1033173712"; //testId
     }
     return null;
   }
 
   String getRewardAdID() {
     if (Platform.isIOS) {
-      return "ca-app-pub-1059342231343027/1379856667"; //realId
+      return "ca-app-pub-1113274221551554/9659787465"; //realId
       // return "ca-app-pub-3940256099942544/1712485313"; //testId
     } else if (Platform.isAndroid) {
-      // return "ca-app-pub-1059342231343027/8416038302"; //realId
-      return "ca-app-pub-3940256099942544/5224354917"; //testId
+      return "ca-app-pub-1113274221551554/1853449631"; //realId
+      // return "ca-app-pub-3940256099942544/5224354917"; //testId
     }
     return null;
   }
@@ -45,7 +45,9 @@ class AdMobServices {
 
   loadRewardAd() {
     rewardedVideoAd.load(
-        adUnitId: getRewardAdID(), targetingInfo: targetingInfo);
+        adUnitId: getRewardAdID(), targetingInfo: targetingInfo).catchError((e){
+          print('error ====== $e');
+        });
   }
 
   showRewardedAds() {
@@ -60,8 +62,10 @@ class AdMobServices {
       targetingInfo: targetingInfo,
       listener: (MobileAdEvent event) {
         if (event == MobileAdEvent.failedToLoad) {
+          print('==================>Failed To load Ads');
           InterstitialAd().load();
         } else if (event == MobileAdEvent.closed) {
+          print('==================>Ad Closed');
           InterstitialAd().load();
         }
       },

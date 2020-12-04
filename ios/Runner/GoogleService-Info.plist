@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>866973414666-msa67tt2dkma7dpfimg98m05kdoh7lkv.apps.googleusercontent.com</string>
+	<string>156446742512-3kf8p8gf4m4p867osqlhdlupeoigni6f.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.866973414666-msa67tt2dkma7dpfimg98m05kdoh7lkv</string>
+	<string>com.googleusercontent.apps.156446742512-3kf8p8gf4m4p867osqlhdlupeoigni6f</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDO-S_rz7fAe10mVD6wZq3LmPB9imOZAMg</string>
+	<string>AIzaSyC5IMPM3-5FaOIuJT__Y-ImZmNxDBcTgc8</string>
 	<key>GCM_SENDER_ID</key>
-	<string>866973414666</string>
+	<string>156446742512</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.test.quotes</string>
 	<key>PROJECT_ID</key>
-	<string>motivational-quotes-58908</string>
+	<string>motivation-dose-9bd92</string>
 	<key>STORAGE_BUCKET</key>
-	<string>motivational-quotes-58908.appspot.com</string>
+	<string>motivation-dose-9bd92.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:866973414666:ios:8f07efe70835bc6b6d36f3</string>
-	<key>DATABASE_URL</key>
-	<string>https://motivational-quotes-58908.firebaseio.com</string>
+	<string>1:156446742512:ios:1c732536f26c60a7f8af35</string>
 </dict>
 </plist>
