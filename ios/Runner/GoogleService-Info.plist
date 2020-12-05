@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>156446742512-3kf8p8gf4m4p867osqlhdlupeoigni6f.apps.googleusercontent.com</string>
+	<string>156446742512-v0ji6ren3be7a8gb7u641jojug2nq95k.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.156446742512-3kf8p8gf4m4p867osqlhdlupeoigni6f</string>
+	<string>com.googleusercontent.apps.156446742512-v0ji6ren3be7a8gb7u641jojug2nq95k</string>
 	<key>API_KEY</key>
 	<string>AIzaSyC5IMPM3-5FaOIuJT__Y-ImZmNxDBcTgc8</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.test.quotes</string>
+	<string>com.motivation.dose</string>
 	<key>PROJECT_ID</key>
 	<string>motivation-dose-9bd92</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:156446742512:ios:1c732536f26c60a7f8af35</string>
+	<string>1:156446742512:ios:dc6e3f5567a9655ff8af35</string>
 </dict>
 </plist>
