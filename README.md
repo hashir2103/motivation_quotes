@@ -1,6 +1,15 @@
 # motivation_quotes
 
-A new Flutter project.
+
+<img src="AppScreenshots/4.jpeg">
+<img src="AppScreenshots/1.jpeg">
+<img src="AppScreenshots/2.jpeg">
+<img src="AppScreenshots/3.jpeg">
+<img src="AppScreenshots/5.jpeg">
+<img src="AppScreenshots/logo.jpeg">
+
+
+
 
 ## Getting Started
 
